@@ -60,13 +60,13 @@ namespace sfz
 		bool OnKey(uint8_t chan, uint8_t key, uint8_t vel,
 			   uint8_t bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
 			   uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
-			   float timer, uint8_t seq, uint8_t* sw, uint8_t last_sw_key, uint8_t prev_sw_key);
+			   float timer, uint8_t seq, bool* sw, uint8_t last_sw_key, uint8_t prev_sw_key);
 
 		/// Return true if region is triggered by control change
 		bool OnControl(uint8_t chan, uint8_t cont, uint8_t val,
 			       uint8_t bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
 			       uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
-			       float timer, uint8_t seq, uint8_t* sw, uint8_t last_sw_key, uint8_t prev_sw_key);
+			       float timer, uint8_t seq, bool* sw, uint8_t last_sw_key, uint8_t prev_sw_key);
 
 // 		Articulation* GetArticulation(uint8_t bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft, uint8_t cc*);
 
