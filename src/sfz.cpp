@@ -44,10 +44,10 @@ namespace sfz
 	}
 
 	bool
-	Instrument::OnKey(uint8_t chan, uint8_t key, uint8_t vel,
-			  uint8_t bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
-			  uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
-			  float timer, uint8_t seq, bool* sw, uint8_t last_sw_key, uint8_t prev_sw_key)
+	Region::OnKey(uint8_t chan, uint8_t key, uint8_t vel,
+		      uint8_t bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
+		      uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
+		      float timer, uint8_t seq, bool* sw, uint8_t last_sw_key, uint8_t prev_sw_key)
 	{
 		// chan        (MIDI channel)
 		// key         (MIDI note)
@@ -100,10 +100,10 @@ namespace sfz
 	}
 
 	bool
-	Instrument::OnControl(uint8_t chan, uint8_t cont, uint8_t val,
-			      uint8_t bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
-			      uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
-			      float timer, uint8_t seq, bool* sw, uint8_t last_sw_key, uint8_t prev_sw_key)
+	Region::OnControl(uint8_t chan, uint8_t cont, uint8_t val,
+			  uint8_t bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
+			  uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
+			  float timer, uint8_t seq, bool* sw, uint8_t last_sw_key, uint8_t prev_sw_key)
 	{
 		// chan      (MIDI channel)
 		// cont      (MIDI controller)
@@ -180,13 +180,13 @@ namespace sfz
 	}
 
 	void
-	Reset()
+	Group::Reset()
 	{
 		// sample definition
 		sample = "";
 
 		// input control defaults
-		lohan = 1; hichan = 16;
+		lochan = 1; hichan = 16;
 		lokey = 0; hikey = 127;
 		lovel = 0; hivel = 127;
 		lobend = -8192; hibend = 8192;
@@ -229,7 +229,7 @@ namespace sfz
 	Region*
 	Group::RegionFactory()
 	{
-		Region* region = new Region(this);
+		Region* region = new Region();
 
 		region->id = id++;
 		region->sample = sample;
@@ -804,7 +804,7 @@ namespace sfz
 					_current_group->locc[num_cc] = value;
 				}
 			}
-			else if ("hi" = key_cc)
+			else if ("hi" == key_cc)
 			{
 				switch (_current_section)
 				{
@@ -864,7 +864,7 @@ namespace sfz
 					_current_group->on_locc[num_cc] = value;
 				}
 			}
-			else if ("on_hi" = key_cc)
+			else if ("on_hi" == key_cc)
 			{
 				switch (_current_section)
 				{
