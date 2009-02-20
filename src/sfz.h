@@ -44,6 +44,7 @@ namespace sfz
 	enum off_mode_t { OFF_FAST, OFF_NORMAL };
 
 	typedef unsigned char trigger_t;
+	typedef unsigned char uint8_t;
 
 	/////////////////////////////////////////////////////////////
 	// class Region
@@ -52,11 +53,25 @@ namespace sfz
 	class Region
 	{
 	public:
-		Region(Group* parent);
+		Region();
 		virtual ~Region();
 
-		/// Returns the group Region belongs to
-		Group* get_group();
+		/// Return true if region is triggered by key
+		bool OnKey(uint8_t chan, uint8_t key, uint8_t vel,
+			   uint8_t bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
+			   uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
+			   float timer, uint8_t seq, uint8_t* sw, uint8_t last_sw_key, uint8_t prev_sw_key);
+
+		/// Return true if region is triggered by control change
+		bool OnControl(uint8_t chan, uint8_t cont, uint8_t val,
+			       uint8_t bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
+			       uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
+			       float timer, uint8_t seq, uint8_t* sw, uint8_t last_sw_key, uint8_t prev_sw_key);
+
+// 		Articulation* GetArticulation(uint8_t bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft, uint8_t cc*);
+
+		// unique region id
+		int id;
 
 		// sample definition
 		std::string sample;
@@ -65,19 +80,24 @@ namespace sfz
 		int   lochan;    int   hichan;
 		int   lokey;     int   hikey;
 		int   lovel;     int   hivel;
-		//int   loccN;     int   hiccN; //fixme: implement
+		int   locc[128]; int   hicc[128];
 		int   lobend;    int   hibend;
+		int   lobpm;     int   hibpm;
 		int   lochanaft; int   hichanaft;
 		int   lopolyaft; int   hipolyaft;
+		int   loprog;    int   hiprog;
 		float lorand;    float hirand;
-		int   lobpm;     int   hibpm;
+		float lotimer;   float hitimer;
 
 		int seq_length;  
 		int seq_position;
+		
+		int start_locc[128]; int start_hicc[128];
+		int stop_locc[128];  int stop_hicc[128];
 
 		int sw_lokey;    int sw_hikey;  
 		int sw_last;
-		int sw_down;     
+		int sw_down;
 		int sw_up;
 		int sw_previous; 
 		sw_vel_t sw_vel;
@@ -88,74 +108,7 @@ namespace sfz
 		int off_by;
 		off_mode_t off_mode;
 
-	protected:
-		/// Return true if Region is triggered by note
-		bool triggered(int chan, int note, int vel, float rand, trigger_t trig);
-
-		friend class Instrument;
-
-	private:
-		/// Pointer to the Group this region belongs to
-		Group* _group;
-
-		int _seq_position_counter;
-		int _last_sw_key;
-	};
-
-	/////////////////////////////////////////////////////////////
-	// class Group
-
-	/// Defines Group information of an Instrument
-	class Group
-	{
-	public:
-		Group(Instrument* parent);
-		virtual ~Group();
-
-		/// Add a new region to group
-		Region* add_region();
-		/// Returns the instrument the Group belongs to
-		Instrument* get_instrument();
-		/// Returns the first Region of this Group
-		Region* get_first_region();
-		/// Returns the next Region of this Group
-		Region* get_next_region();
-
-		// sample definition
-		std::string sample;
-
-		// input controls
-		int   lochan;    int   hichan;
-		int   lokey;     int   hikey;
-		int   lovel;     int   hivel;
-		//int   loccN;     int   hiccN; //fixme: implement
-		int   lobend;    int   hibend;
-		int   lochanaft; int   hichanaft;
-		int   lopolyaft; int   hipolyaft;
-		float lorand;    float hirand;
-		int   lobpm;     int   hibpm;
-
-		int seq_length;  
-		int seq_position;
-
-		int sw_lokey;    int sw_hikey;  
-		int sw_last;
-		int sw_down;     
-		int sw_up;
-		int sw_previous; 
-		sw_vel_t sw_vel;
-
-		trigger_t trigger;
-
-		int group;
-		int off_by;
-		off_mode_t off_mode;
-
-	private:
-		/// Pointer to the Instrument this group belongs to
-		Instrument* _instrument;
-		/// List of Regions belonging to this Group
-		std::vector<Region*> _regions;
+		int on_locc[128]; int on_hicc[128];
 	};
 
 	/////////////////////////////////////////////////////////////
@@ -168,50 +121,65 @@ namespace sfz
 		Instrument();
 		virtual ~Instrument();
 
-		/// Adds a new group to the instrument
-		Group* add_group();
-		/// Returns the first Group of this Instrument
-		Group* get_first_group();
-		/// Return the next Group of this Instrument
-		Group* get_next_group();
+		/// List of Regions belonging to this Instrument
+		std::vector<Region*> regions;
+	};
 
-		/// Pitch bend handler
-		void pitch_bend(const int value);
-		/// Channel pressure handler 
-		void channel_pressure(const int value);
-		/// Aftertouch handler
-		void aftertouch(const int value);
+	/////////////////////////////////////////////////////////////
+	// class Group
 
-		/// Set the tempo
-		void set_bpm(const int value);
+	/// A Group act just as a template containing Region default values
+	class Group
+	{
+	public:
+		Group();
+		virtual ~Group();
 
-		/// Handler returns Regions for a triggred continous controller event
-		std::vector<Region*> continous_controller(const int controller, const int value);
-		/// Handler returns Regions for a triggered note on event
-		std::vector<Region*> note_on(const int channel, const int note, const int velocity);
-		/// Handler returns Regions for a triggered note off event
-		std::vector<Region*> note_off(const int channel, const int note);
+		/// Reset Group to default values
+		void Reset();
 
-	protected:
-		int _controller[128];
-		bool _key[128];
-		int _vel[128];
+		/// Create a new Region
+		Region* RegionFactory();
 
-		int _keys_pressed;
+		// id counter
+		int id;
 
-		int _last_key;
-		int _last_vel;
+		// sample definition
+		std::string sample;
 
-		int _bend;
-		int _chanaft;
-		int _polyaft;
-		int _bpm;
+		// input controls
+		int   lochan;    int   hichan;
+		int   lokey;     int   hikey;
+		int   lovel;     int   hivel;
+		int   locc[128]; int   hicc[128];
+		int   lobend;    int   hibend;
+		int   lobpm;     int   hibpm;
+		int   lochanaft; int   hichanaft;
+		int   lopolyaft; int   hipolyaft;
+		int   loprog;    int   hiprog;
+		float lorand;    float hirand;
+		float lotimer;   float hitimer;
 
-		friend class Region;
+		int seq_length;  
+		int seq_position;
 
-	private:
-		/// List of Groups belonging to this Instrument
-		std::vector<Group*> _groups;
+		int start_locc[128]; int start_hicc[128];
+		int stop_locc[128];  int stop_hicc[128];
+
+		int sw_lokey;    int sw_hikey;  
+		int sw_last;
+		int sw_down;     
+		int sw_up;
+		int sw_previous; 
+		sw_vel_t sw_vel;
+
+		trigger_t trigger;
+
+		int group;
+		int off_by;
+		off_mode_t off_mode;
+
+		int on_locc[128]; int on_hicc[128];
 	};
 
 	/////////////////////////////////////////////////////////////
@@ -226,7 +194,7 @@ namespace sfz
 		virtual ~File();
 
 		/// Returns a pointer to the instrument object
-		Instrument* get_instrument();
+		Instrument* GetInstrument();
 
 	private:
 		void push_header(std::string token);
