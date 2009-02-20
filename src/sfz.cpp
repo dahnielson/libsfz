@@ -792,16 +792,16 @@ namespace sfz
 		{
 			std::string::size_type delimiter_index = key.find("cc");
 			std::string key_cc = key.substr(0, delimiter_index);
-			std::string num_cc = key.substr(delimiter_index + 2);
+			int num_cc = boost::lexical_cast<int>(key.substr(delimiter_index + 2));
 
 			if ("lo" == key_cc)
 			{
 				switch (_current_section)
 				{
 				case REGION:
-					_current_region->locc[num_cc] = value;
+					_current_region->locc[num_cc] = boost::lexical_cast<int>(value);
 				case GROUP:
-					_current_group->locc[num_cc] = value;
+					_current_group->locc[num_cc] = boost::lexical_cast<int>(value);
 				}
 			}
 			else if ("hi" == key_cc)
@@ -809,9 +809,9 @@ namespace sfz
 				switch (_current_section)
 				{
 				case REGION:
-					_current_region->hicc[num_cc] = value;
+					_current_region->hicc[num_cc] = boost::lexical_cast<int>(value);
 				case GROUP:
-					_current_group->hicc[num_cc] = value;
+					_current_group->hicc[num_cc] = boost::lexical_cast<int>(value);
 				}
 			}
 			else if ("start_lo" == key_cc)
@@ -819,9 +819,9 @@ namespace sfz
 				switch (_current_section)
 				{
 				case REGION:
-					_current_region->start_locc[num_cc] = value;
+					_current_region->start_locc[num_cc] = boost::lexical_cast<int>(value);
 				case GROUP:
-					_current_group->start_locc[num_cc] = value;
+					_current_group->start_locc[num_cc] = boost::lexical_cast<int>(value);
 				}
 			}
 			else if ("start_hi" == key_cc)
@@ -829,9 +829,9 @@ namespace sfz
 				switch (_current_section)
 				{
 				case REGION:
-					_current_region->start_hicc[num_cc] = value;
+					_current_region->start_hicc[num_cc] = boost::lexical_cast<int>(value);
 				case GROUP:
-					_current_group->start_hicc[num_cc] = value;
+					_current_group->start_hicc[num_cc] = boost::lexical_cast<int>(value);
 				}
 			}
 			else if ("stop_lo" == key_cc)
@@ -839,9 +839,9 @@ namespace sfz
 				switch (_current_section)
 				{
 				case REGION:
-					_current_region->stop_locc[num_cc] = value;
+					_current_region->stop_locc[num_cc] = boost::lexical_cast<int>(value);
 				case GROUP:
-					_current_group->stop_locc[num_cc] = value;
+					_current_group->stop_locc[num_cc] = boost::lexical_cast<int>(value);
 				}
 			}
 			else if ("stop_hi" == key_cc)
@@ -849,9 +849,9 @@ namespace sfz
 				switch (_current_section)
 				{
 				case REGION:
-					_current_region->stop_hicc[num_cc] = value;
+					_current_region->stop_hicc[num_cc] = boost::lexical_cast<int>(value);
 				case GROUP:
-					_current_group->stop_hicc[num_cc] = value;
+					_current_group->stop_hicc[num_cc] = boost::lexical_cast<int>(value);
 				}
 			}
 			else if ("on_lo" == key_cc)
@@ -859,9 +859,9 @@ namespace sfz
 				switch (_current_section)
 				{
 				case REGION:
-					_current_region->on_locc[num_cc] = value;
+					_current_region->on_locc[num_cc] = boost::lexical_cast<int>(value);
 				case GROUP:
-					_current_group->on_locc[num_cc] = value;
+					_current_group->on_locc[num_cc] = boost::lexical_cast<int>(value);
 				}
 			}
 			else if ("on_hi" == key_cc)
@@ -869,9 +869,9 @@ namespace sfz
 				switch (_current_section)
 				{
 				case REGION:
-					_current_region->on_hicc[num_cc] = value;
+					_current_region->on_hicc[num_cc] = boost::lexical_cast<int>(value);
 				case GROUP:
-					_current_group->on_hicc[num_cc] = value;
+					_current_group->on_hicc[num_cc] = boost::lexical_cast<int>(value);
 				}
 			}
 		}
