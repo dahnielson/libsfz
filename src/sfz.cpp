@@ -125,16 +125,16 @@ namespace sfz
 		// prev_sw_key (the previous note value)
 
 		bool is_triggered = (
- 			chan    >= lochan           &&  chan    <= hichan           &&
-			val     >= on_locc[cont]    &&  val     <= on_hicc[cont]    &&
-			val     >= start_locc[cont] &&  val     <= start_hicc[cont] &&
- 			bend    >= lobend           &&  bend    <= hibend           &&
- 			bpm     >= lobpm            &&  bpm     <= hibpm            &&
- 			chanaft >= lochanaft        &&  chanaft <= hichanaft        &&
- 			polyaft >= lopolyaft        &&  polyaft <= hipolyaft        &&
-			prog    >= loprog           &&  prog    <= hiprog           &&
- 			rand    >= lorand           &&  rand    <= hirand           &&
-			timer   >= lotimer          &&  timer   <= hitimer          &&
+ 			chan    >= lochan           &&  chan    <= hichan             &&
+			((val   >= on_locc[cont]    &&  val     <= on_hicc[cont])     ||
+			 (val   >= start_locc[cont] &&  val     <= start_hicc[cont])) &&
+ 			bend    >= lobend           &&  bend    <= hibend             &&
+ 			bpm     >= lobpm            &&  bpm     <= hibpm              &&
+ 			chanaft >= lochanaft        &&  chanaft <= hichanaft          &&
+ 			polyaft >= lopolyaft        &&  polyaft <= hipolyaft          &&
+			prog    >= loprog           &&  prog    <= hiprog             &&
+ 			rand    >= lorand           &&  rand    <= hirand             &&
+			timer   >= lotimer          &&  timer   <= hitimer            &&
  			seq == seq_position   &&
 			((sw_last >= sw_lokey && sw_last <= sw_hikey) ? (last_sw_key == sw_last) : true)  &&
                         ((sw_down >= sw_lokey && sw_down <= sw_hikey) ? (sw[sw_down]) : true)  &&
