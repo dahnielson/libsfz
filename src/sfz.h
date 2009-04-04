@@ -22,8 +22,10 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #include <fstream>
+#include <iostream>
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 #define TRIGGER_ATTACK  ((unsigned char) (1 << 0)) // 0x01
 #define TRIGGER_RELEASE ((unsigned char) (1 << 1)) // 0x02
@@ -50,8 +52,129 @@ namespace sfz
 	typedef unsigned char uint8_t;
 
 	/////////////////////////////////////////////////////////////
+	// class Exception
+
+	class Exception : 
+		public std::runtime_error 
+	{
+        public:
+		Exception(const std::string& msg) : 
+			runtime_error(msg) 
+		{
+		}
+		
+		std::string Message() 
+		{
+			return what();
+		}
+		
+		void PrintMessage() 
+		{
+			std::cerr << what() << std::endl << std::flush;
+		}
+	};
+
+	/////////////////////////////////////////////////////////////
+	// class optional
+
+	//  Handy class nicked from LinuxSampler...
+	//  Copyright (C) 2003, 2004 by Benno Senoner and Christian Schoenebeck 
+	//  Copyright (C) 2005, 2006 Christian Schoenebeck  
+
+	class optional_base 
+	{
+        public:
+		class nothing_t { public: nothing_t() {} };
+		static const nothing_t nothing;
+	};
+
+	template<class T>
+	class optional : 
+		public optional_base 
+	{
+        public:
+		optional() 
+		{
+			initialized = false;
+		}
+
+		optional(T data) 
+		{
+			this->data  = data;
+			initialized = true;
+		}
+		
+		optional(nothing_t) 
+		{
+			initialized = false;
+		}
+		
+		template <class T_inner>
+		optional(T_inner data) 
+		{
+			this->data  = T(data);
+			initialized = true;
+		}
+		
+		const T& get() const throw (Exception) 
+		{
+			if (!initialized) throw Exception("optional variable not initialized");
+			return data;
+		}
+		
+		T& get() throw (Exception) 
+		{
+			if (!initialized) throw Exception("optional variable not initialized");
+			return data;
+		}
+
+		void unset()
+		{
+			initialized = false;
+		}
+		
+		optional& operator =(const optional& arg) throw (Exception) 
+		{
+			if (!arg.initialized) throw Exception("optional variable not initialized");
+			this->data  = arg.data;
+			initialized = true;
+			return *this;
+		}
+		
+		optional& operator =(const T& arg) 
+		{
+			this->data  = arg;
+			initialized = true;
+			return *this;
+		}
+		
+		const T& operator *() const throw (Exception) { return get(); }
+		T&       operator *()       throw (Exception) { return get(); }
+		
+		const T* operator ->() const throw (Exception) 
+		{
+			if (!initialized) throw Exception("optional variable not initialized");
+			return &data;
+		}
+		
+		T* operator ->() throw (Exception) 
+		{
+			if (!initialized) throw Exception("optional variable not initialized");
+			return &data;
+		}
+		
+		operator bool()   const { return initialized; }
+		bool operator !() const { return !initialized; }
+		
+        protected:
+		T    data;
+		bool initialized;
+	};
+
+	/////////////////////////////////////////////////////////////
 	// class Articulation
 
+	// Articulation containing all performance parameters for synthesis
 	class Articulation
 	{
 	public:
@@ -60,140 +183,14 @@ namespace sfz
 	};
 
 	/////////////////////////////////////////////////////////////
-	// class Region
+	// class Definition
 
-	/// Defines Region information of an Instrument
-	class Region
+	// Base definition used by groups and regions
+	class Definition
 	{
 	public:
-		Region();
-		virtual ~Region();
-
-		/// Return true if region is triggered by key
-		bool OnKey(uint8_t chan, uint8_t key, uint8_t vel,
-			   int bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
-			   uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
-			   float timer, uint8_t seq, bool* sw, uint8_t last_sw_key, uint8_t prev_sw_key);
-
-		/// Return true if region is triggered by control change
-		bool OnControl(uint8_t chan, uint8_t cont, uint8_t val,
-			       int bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
-			       uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
-			       float timer, uint8_t seq, bool* sw, uint8_t last_sw_key, uint8_t prev_sw_key);
-
-		/// Return an articulation for the current state
- 		Articulation* GetArticulation(int bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft, uint8_t* cc);
-
-		// unique region id
-		int id;
-
-		// sample definition
-		std::string sample;
-
-		// input controls
-		int   lochan;    int   hichan;
-		int   lokey;     int   hikey;
-		int   lovel;     int   hivel;
-		int   locc[128]; int   hicc[128];
-		int   lobend;    int   hibend;
-		int   lobpm;     int   hibpm;
-		int   lochanaft; int   hichanaft;
-		int   lopolyaft; int   hipolyaft;
-		int   loprog;    int   hiprog;
-		float lorand;    float hirand;
-		float lotimer;   float hitimer;
-
-		int seq_length;  
-		int seq_position;
-		
-		int start_locc[128]; int start_hicc[128];
-		int stop_locc[128];  int stop_hicc[128];
-
-		int sw_lokey;    int sw_hikey;  
-		int sw_last;
-		int sw_down;
-		int sw_up;
-		int sw_previous; 
-		sw_vel_t sw_vel;
-
-		trigger_t trigger;
-
-		int group;
-		int off_by;
-		off_mode_t off_mode;
-
-		int on_locc[128]; int on_hicc[128];
-
-		// sample player
-		int count;
-		float delay; float delay_random; float delay_oncc[128];
-		int delay_beats; int stop_beats;
-		int delay_samples; int delay_samples_oncc[128];
-		int end;
-		int loop_crossfade;
-		int offset; int offset_random; int offset_oncc[128];
-		loop_mode_t loop_mode;
-		int loop_start; int loop_end;
-		float sync_beats;
-		float sync_offset;
-		
-		// amplifier
-		float volume;
-		float pan;
-		float width;
-		float position;
-		float amp_keytrack; int amp_keycenter; float amp_veltrack; float amp_velcurve_[128]; float amp_random;
-		float rt_decay;
-		float gain_oncc[128];
-		int xfin_lokey; int xfin_hikey;
-		int xfout_lokey; int xfout_hikey;
-		curve_t xf_keycurve;
-		int xfin_lovel; int xfin_hivel;
-		int xfout_lovel; int xfout_hivel;
-		curve_t xf_velcurve;
-		int xfin_locc[128]; int xfin_hicc[128];
-		int xfout_locc[128]; int xfout_hicc[128];
-		curve_t xf_cccurve;
-
-		// pitch
-		int transpose;
-		int tune;
-		int pitch_keycenter; int pitch_keytrack; int pitch_veltrack; int pitch_random;
-		int bend_up; int bend_down; int bend_step;
-	};
-
-	/////////////////////////////////////////////////////////////
-	// class Instrument
-
-	/// Provides all neccessary information for the synthesis of an Instrument
-	class Instrument
-	{
-	public:
-		Instrument();
-		virtual ~Instrument();
-
-		/// List of Regions belonging to this Instrument
-		std::vector<Region*> regions;
-	};
-
-	/////////////////////////////////////////////////////////////
-	// class Group
-
-	/// A Group act just as a template containing Region default values
-	class Group
-	{
-	public:
-		Group();
-		virtual ~Group();
-
-		/// Reset Group to default values
-		void Reset();
-
-		/// Create a new Region
-		Region* RegionFactory();
-
-		// id counter
-		int id;
+		Definition();
+		virtual ~Definition();
 
 		// sample definition
 		std::string sample;
@@ -226,48 +223,114 @@ namespace sfz
 
 		trigger_t trigger;
 
-		int group;
-		int off_by;
+		optional<int> group;
+		optional<int> off_by;
 		off_mode_t off_mode;
 
 		int on_locc[128]; int on_hicc[128];
 
 		// sample player
-		int count;
-		float delay; float delay_random; float delay_oncc[128];
-		int delay_beats; int stop_beats;
-		int delay_samples; int delay_samples_oncc[128];
-		int end;
-		int loop_crossfade;
-		int offset; int offset_random; int offset_oncc[128];
+		optional<int> count;
+		optional<float> delay; optional<float> delay_random; optional<float> delay_oncc[128];
+		optional<int> delay_beats; optional<int> stop_beats;
+		optional<int> delay_samples; optional<int> delay_samples_oncc[128];
+		optional<int> end;
+		optional<int> loop_crossfade;
+		optional<int> offset; optional<int> offset_random; optional<int> offset_oncc[128];
 		loop_mode_t loop_mode;
-		int loop_start; int loop_end;
-		float sync_beats;
-		float sync_offset;
+		optional<int> loop_start; optional<int> loop_end;
+		optional<float> sync_beats;
+		optional<float> sync_offset;
 		
 		// amplifier
 		float volume;
 		float pan;
 		float width;
 		float position;
-		float amp_keytrack; int amp_keycenter; float amp_veltrack; float amp_velcurve_[128]; float amp_random;
+		float amp_keytrack; optional<int> amp_keycenter; float amp_veltrack; optional<float> amp_velcurve_[128]; float amp_random;
 		float rt_decay;
 		float gain_oncc[128];
-		int xfin_lokey; int xfin_hikey;
-		int xfout_lokey; int xfout_hikey;
+		optional<int> xfin_lokey; optional<int> xfin_hikey;
+		optional<int> xfout_lokey; optional<int> xfout_hikey;
 		curve_t xf_keycurve;
-		int xfin_lovel; int xfin_hivel;
-		int xfout_lovel; int xfout_hivel;
+		optional<int> xfin_lovel; optional<int> xfin_hivel;
+		optional<int> xfout_lovel; optional<int> xfout_hivel;
 		curve_t xf_velcurve;
-		int xfin_locc[128]; int xfin_hicc[128];
-		int xfout_locc[128]; int xfout_hicc[128];
+		optional<int> xfin_locc[128]; optional<int> xfin_hicc[128];
+		optional<int> xfout_locc[128]; optional<int> xfout_hicc[128];
 		curve_t xf_cccurve;
 
 		// pitch
 		int transpose;
 		int tune;
-		int pitch_keycenter; int pitch_keytrack; int pitch_veltrack; int pitch_random;
+		optional<int> pitch_keycenter; int pitch_keytrack; int pitch_veltrack; int pitch_random;
 		int bend_up; int bend_down; int bend_step;
+	};
+
+	/////////////////////////////////////////////////////////////
+	// class Region
+
+	/// Defines Region information of an Instrument
+	class Region :
+		public Definition
+	{
+	public:
+		Region();
+		virtual ~Region();
+
+		/// Return true if region is triggered by key
+		bool OnKey(uint8_t chan, uint8_t key, uint8_t vel,
+			   int bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
+			   uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
+			   float timer, uint8_t seq, bool* sw, uint8_t last_sw_key, uint8_t prev_sw_key);
+
+		/// Return true if region is triggered by control change
+		bool OnControl(uint8_t chan, uint8_t cont, uint8_t val,
+			       int bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft,
+			       uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
+			       float timer, uint8_t seq, bool* sw, uint8_t last_sw_key, uint8_t prev_sw_key);
+
+		/// Return an articulation for the current state
+ 		Articulation* GetArticulation(int bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft, uint8_t* cc);
+
+		// unique region id
+		int id;
+	};
+
+	/////////////////////////////////////////////////////////////
+	// class Instrument
+
+	/// Provides all neccessary information for the synthesis of an Instrument
+	class Instrument
+	{
+	public:
+		Instrument();
+		virtual ~Instrument();
+
+		/// List of Regions belonging to this Instrument
+		std::vector<Region*> regions;
+	};
+
+	/////////////////////////////////////////////////////////////
+	// class Group
+
+	/// A Group act just as a template containing Region default values
+	class Group :
+		public Definition
+	{
+	public:
+		Group();
+		virtual ~Group();
+
+		/// Reset Group to default values
+		void Reset();
+
+		/// Create a new Region
+		Region* RegionFactory();
+
+		// id counter
+		int id;
+
 	};
 
 	/////////////////////////////////////////////////////////////

@@ -33,6 +33,11 @@ namespace sfz
 {
 
 	/////////////////////////////////////////////////////////////
+	// class optional
+
+	const optional_base::nothing_t optional_base::nothing;
+
+	/////////////////////////////////////////////////////////////
 	// class Articulation
 
 	Articulation::Articulation()
@@ -226,21 +231,21 @@ namespace sfz
 
 		trigger = TRIGGER_ATTACK;
 
-		group = -1;
-		off_by = -1;
+		group.unset();
+		off_by.unset();
 		off_mode = OFF_FAST;
 
 		// sample player defaults
-		count = -1;
-		delay = -1; delay_random = -1; 
-		delay_beats = -1; stop_beats = -1;
-		delay_samples = -1;
-		//end = -1;
-		loop_crossfade = -1;
-		offset = -1; offset_random = -1;
+		count.unset();
+		delay.unset(); delay_random.unset(); 
+		delay_beats.unset(); stop_beats.unset();
+		delay_samples.unset();
+		end.unset();
+		loop_crossfade.unset();
+		offset.unset(); offset_random.unset();
 		loop_mode = NO_LOOP;
-		loop_start = -1; loop_end = -1;
-		sync_beats = -1; sync_offset = -1;
+		loop_start.unset(); loop_end.unset();
+		sync_beats.unset(); sync_offset.unset();
 
 		// amplifier defaults
 		volume = 0;
@@ -248,26 +253,26 @@ namespace sfz
 		width = 100;
 		position = 0;
 		amp_keytrack = 0;
-		amp_keycenter = -1;
+		amp_keycenter.unset();
 		amp_veltrack = 0;
 		amp_random = 0;
 		rt_decay = 0;
-		xfin_lokey = -1;
-		xfin_hikey = -1;
-		xfout_lokey = -1;
-		xfout_hikey = -1;
+		xfin_lokey.unset();
+		xfin_hikey.unset();
+		xfout_lokey.unset();
+		xfout_hikey.unset();
 		xf_keycurve = POWER;
-		xfin_lovel = -1;
-		xfin_hivel = -1;
-		xfout_lovel = -1;
-		xfout_hivel = -1;
+		xfin_lovel.unset();
+		xfin_hivel.unset();
+		xfout_lovel.unset();
+		xfout_hivel.unset();
 		xf_velcurve = POWER;
 		xf_cccurve = POWER;
 
 		// pitch defaults
 		transpose = 0;
 		tune = 0;
-		pitch_keycenter = -1;
+		pitch_keycenter.unset();
 		pitch_keytrack = 100;
 		pitch_veltrack = 0;
 		pitch_random = 0;
@@ -289,17 +294,17 @@ namespace sfz
 			on_hicc[i] = -1;
 
 			// sample player
-			delay_oncc[i] = -1;
-			delay_samples_oncc[i] = -1;
-			offset_oncc[i] = -1;
+			delay_oncc[i].unset();
+			delay_samples_oncc[i].unset();
+			offset_oncc[i].unset();
 
 			// amplifier
 			amp_velcurve_[i] = 0;
 			gain_oncc[i] = 0;
-			xfin_locc[i] = -1;
-			xfin_hicc[i] = -1;
-			xfout_locc[i] = -1;
-			xfout_hicc[i] = -1;
+			xfin_locc[i].unset();
+			xfin_hicc[i].unset();
+			xfout_locc[i].unset();
+			xfout_hicc[i].unset();
 		}
 	}
 
