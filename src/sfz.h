@@ -109,6 +109,43 @@ namespace sfz
 		off_mode_t off_mode;
 
 		int on_locc[128]; int on_hicc[128];
+
+		// sample player
+		int count;
+		float delay; float delay_random; float delay_oncc[128];
+		int delay_beats; itn stop_beats;
+		int delay_samples; int delay_samples_oncc[128];
+		int end;
+		int loop_crossfade;
+		int offset; int offset_random; int offset_oncc[128];
+		loop_mode_t loop_mode;
+		int loop_start; int loop_end;
+		int sync_beats;
+		itn sync_offset;
+		
+		// amplifier
+		int volume;
+		int pan;
+		int width;
+		int position;
+		int amp_keytrack; int amp_keycenter; int amp_veltrack; _nt amp_velcurve_N; int amp_random;
+		int rt_decay;
+		int gain_oncc[128];
+		int xfin_lokey; int xfin_hikey;
+		int xfout_lokey; int xfout_hikey;
+		int xf_keycurve;
+		int xfin_lovel; int xfin_hivel;
+		int xfout_lovel; int xfout_hivel;
+		int xf_velcurve;
+		int xfin_locc; int xfin_hicc;
+		int xfout_locc; int xfout_hicc;
+		int xf_cccurve;
+
+		// pitch
+		int traspose;
+		int tune;
+		int pitch_keycenter; int pitch_keytrack; int pitch_veltrack; int pitch_random;
+		int bend_up; int bend_down; int bend_step;
 	};
 
 	/////////////////////////////////////////////////////////////
