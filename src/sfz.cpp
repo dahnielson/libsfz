@@ -322,6 +322,8 @@ namespace sfz
 		region->hikey = hikey;
 		region->lovel = lovel;
 		region->hivel = hivel;
+		region->locc = locc;
+		region->hicc = hicc;
 		region->lobend = lobend;
 		region->hibend = hibend;
 		region->lobpm = lobpm;
@@ -338,6 +340,10 @@ namespace sfz
 		region->hitimer = hitimer;
 		region->seq_length = seq_length;
 		region->seq_position = seq_position;
+		region->start_locc = start_locc;
+		region->start_hicc = start_hicc;
+		region->stop_locc = stop_locc;
+		region->stop_hicc = stop_hicc;
 		region->sw_lokey = sw_lokey;
 		region->sw_hikey = sw_hikey;
 		region->sw_last = sw_last;
@@ -349,18 +355,23 @@ namespace sfz
 		region->group = group;
 		region->off_by = off_by;
 		region->off_mode = off_mode;
+		region->on_locc = on_locc;
+		region->on_hicc = on_hicc;
 
 		// sample player
 		region->count = count;
 		region->delay = delay;
 		region->delay_random = delay_random;
+		region->delay_oncc = delay_oncc;
 		region->delay_beats = delay_beats;
 		region->stop_beats = stop_beats;
 		region->delay_samples = delay_samples;
+		region->delay_samples_oncc = delay_samples_oncc;
 		region->end = end;
 		region->loop_crossfade = loop_crossfade;
 		region->offset = offset;
 		region->offset_random = offset_random;
+		region->offset_oncc = offset_oncc;
 		region->loop_mode = loop_mode;
 		region->loop_start = loop_start;
 		region->loop_end = loop_end;
@@ -375,8 +386,10 @@ namespace sfz
 		region->amp_keytrack = amp_keytrack;
 		region->amp_keycenter = amp_keycenter;
 		region->amp_veltrack = amp_veltrack;
+		region->amp_velcurve_ = amp_velcurve_;
 		region->amp_random = amp_random;
 		region->rt_decay = rt_decay;
+		region->gain_oncc = gain_oncc;
 		region->xfin_lokey = xfin_lokey;
 		region->xfin_hikey = xfin_hikey;
 		region->xfout_lokey = xfout_lokey;
@@ -387,6 +400,10 @@ namespace sfz
 		region->xfout_lovel = xfout_lovel;
 		region->xfout_hivel = xfout_hivel;
 		region->xf_velcurve = xf_velcurve;
+		region->xfin_locc = xfin_locc;
+		region->xfin_hicc = xfin_hicc;
+		region->xfout_locc = xfout_locc;
+		region->xfout_hicc = xfout_hicc;
 		region->xf_cccurve = xf_cccurve;
 
 		// pitch
@@ -399,33 +416,6 @@ namespace sfz
 		region->bend_up = bend_up;
 		region->bend_down = bend_down;
 		region->bend_step = bend_step;
-
-		// CCs
-		for (int i = 0; i < 128; ++i)
-		{
-			// input control
-			region->locc[i] = locc[i];
-			region->hicc[i] = hicc[i];
-			region->start_locc[i] = start_locc[i];
-			region->start_hicc[i] = start_hicc[i];
-			region->stop_locc[i] = stop_locc[i];
-			region->stop_hicc[i] = stop_hicc[i];
-			region->on_locc[i] = on_locc[i];
-			region->on_hicc[i] = on_hicc[i];
-
-			// sample player
-			region->delay_oncc[i] = delay_oncc[i];
-			region->delay_samples_oncc[i] = delay_samples_oncc[i];
-			region->offset_oncc[i] = offset_oncc[i];
-
-			// amplifier
-			region->amp_velcurve_[i] = amp_velcurve_[i];
-			region->gain_oncc[i] = gain_oncc[i];
-			region->xfin_locc[i] = xfin_locc[i];
-			region->xfin_hicc[i] = xfin_hicc[i];
-			region->xfout_locc[i] = xfout_locc[i];
-			region->xfout_hicc[i] = xfout_hicc[i];
-		}
 
 		return region;
 	}
