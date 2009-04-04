@@ -21,9 +21,6 @@
 
 #include "sfz.h"
 
-#include <stdlib.h>
-#include <time.h>
-
 #include <iostream>
 #include <sstream>
 
