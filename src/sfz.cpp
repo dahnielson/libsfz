@@ -174,7 +174,7 @@ namespace sfz
 	Articulation* 
 	Region::GetArticulation(int bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft, uint8_t* cc)
 	{
-		return new Articulation();
+		return new Articulation(); //todo: implement GetArticulation()
 	}
 
 	/////////////////////////////////////////////////////////////
