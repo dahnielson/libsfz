@@ -1,7 +1,7 @@
 /* -*- Mode: C++ ; c-basic-offset: 8 -*- */
 
 // SFZ 1.0
-// Copyright (c) 2008, Anders Dahnielson
+// Copyright (c) 2008-2009, Anders Dahnielson
 //
 // Contact: anders@dahnielson.com
 //
