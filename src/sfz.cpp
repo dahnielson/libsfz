@@ -33,6 +33,17 @@ namespace sfz
 {
 
 	/////////////////////////////////////////////////////////////
+	// class Articulation
+
+	Articulation::Articulation()
+	{
+	}
+
+	Articulation::~Articulation()
+	{
+	}
+
+	/////////////////////////////////////////////////////////////
 	// class Region
 
 	Region::Region()
