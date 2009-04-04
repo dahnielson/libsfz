@@ -44,7 +44,7 @@ namespace sfz
 	enum sw_vel_t    { VEL_CURRENT, VEL_PREVIOUS };
 	enum off_mode_t  { OFF_FAST, OFF_NORMAL };
 	enum loop_mode_t { NO_LOOP, ONE_SHOT, LOOP_CONTINOUS, LOOP_SUSTAIN };
-	enum curve_t  { GAIN, POWER };
+	enum curve_t     { GAIN, POWER };
 
 	typedef unsigned char trigger_t;
 	typedef unsigned char uint8_t;
