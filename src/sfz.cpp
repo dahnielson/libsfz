@@ -155,6 +155,12 @@ namespace sfz
 		return true;
 	}
 
+	Articulation* 
+	Region::GetArticulation(int bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft, uint8_t* cc)
+	{
+		return new Articulation();
+	}
+
 	/////////////////////////////////////////////////////////////
 	// class Instrument
 
@@ -182,7 +188,7 @@ namespace sfz
 	void
 	Group::Reset()
 	{
-		// sample definition
+		// sample definition default
 		sample = "";
 
 		// input control defaults
@@ -213,8 +219,55 @@ namespace sfz
 		off_by = -1;
 		off_mode = OFF_FAST;
 
+		// sample player defaults
+		count = -1;
+		delay = -1; delay_random = -1; 
+		delay_beats = -1; stop_beats = -1;
+		delay_samples = -1;
+		//end = -1;
+		loop_crossfade = -1;
+		offset = -1; offset_random = -1;
+		loop_mode = NO_LOOP;
+		loop_start = -1; loop_end = -1;
+		sync_beats = -1; sync_offset = -1;
+
+		// amplifier defaults
+		volume = 0;
+		pan = 0;
+		width = 100;
+		position = 0;
+		amp_keytrack = 0;
+		amp_keycenter = -1;
+		amp_veltrack = 0;
+		amp_random = 0;
+		rt_decay = 0;
+		xfin_lokey = -1;
+		xfin_hikey = -1;
+		xfout_lokey = -1;
+		xfout_hikey = -1;
+		xf_keycurve = POWER;
+		xfin_lovel = -1;
+		xfin_hivel = -1;
+		xfout_lovel = -1;
+		xfout_hivel = -1;
+		xf_velcurve = POWER;
+		xf_cccurve = POWER;
+
+		// pitch defaults
+		transpose = 0;
+		tune = 0;
+		pitch_keycenter = -1;
+		pitch_keytrack = 100;
+		pitch_veltrack = 0;
+		pitch_random = 0;
+		bend_up = 0;
+		bend_down = 0;
+		bend_step = 0;
+
+		// CCs defaults
 		for (int i = 0; i < 128; ++i)
 		{
+			// input control
 			locc[i] = 0;
 			hicc[i] = 127;
 			start_locc[i] = -1;
@@ -223,6 +276,19 @@ namespace sfz
 			stop_hicc[i] = -1;
 			on_locc[i] = -1;
 			on_hicc[i] = -1;
+
+			// sample player
+			delay_oncc[i] = -1;
+			delay_samples_oncc[i] = -1;
+			offset_oncc[i] = -1;
+
+			// amplifier
+			amp_velcurve_[i] = 0;
+			gain_oncc[i] = 0;
+			xfin_locc[i] = -1;
+			xfin_hicc[i] = -1;
+			xfout_locc[i] = -1;
+			xfout_hicc[i] = -1;
 		}
 	}
 
@@ -232,7 +298,11 @@ namespace sfz
 		Region* region = new Region();
 
 		region->id = id++;
+
+		// sample definition
 		region->sample = sample;
+
+		// input control
 		region->lochan = lochan;
 		region->hichan = hichan;
 		region->lokey = lokey;
@@ -267,8 +337,60 @@ namespace sfz
 		region->off_by = off_by;
 		region->off_mode = off_mode;
 
+		// sample player
+		region->count = count;
+		region->delay = delay;
+		region->delay_random = delay_random;
+		region->delay_beats = delay_beats;
+		region->stop_beats = stop_beats;
+		region->delay_samples = delay_samples;
+		region->end = end;
+		region->loop_crossfade = loop_crossfade;
+		region->offset = offset;
+		region->offset_random = offset_random;
+		region->loop_mode = loop_mode;
+		region->loop_start = loop_start;
+		region->loop_end = loop_end;
+		region->sync_beats = sync_beats;
+		region->sync_offset = sync_offset;
+
+		// amplifier
+		region->volume = volume;
+		region->pan = pan;
+		region->width = width;
+		region->position = position;
+		region->amp_keytrack = amp_keytrack;
+		region->amp_keycenter = amp_keycenter;
+		region->amp_veltrack = amp_veltrack;
+		region->amp_random = amp_random;
+		region->rt_decay = rt_decay;
+		region->xfin_lokey = xfin_lokey;
+		region->xfin_hikey = xfin_hikey;
+		region->xfout_lokey = xfout_lokey;
+		region->xfout_hikey = xfout_hikey;
+		region->xf_keycurve = xf_keycurve;
+		region->xfin_lovel = xfin_lovel;
+		region->xfin_hivel = xfin_lovel;
+		region->xfout_lovel = xfout_lovel;
+		region->xfout_hivel = xfout_hivel;
+		region->xf_velcurve = xf_velcurve;
+		region->xf_cccurve = xf_cccurve;
+
+		// pitch
+		region->transpose = transpose;
+		region->tune = tune;
+		region->pitch_keycenter = pitch_keycenter;
+		region->pitch_keytrack = pitch_keytrack;
+		region->pitch_veltrack = pitch_veltrack;
+		region->pitch_random = pitch_random;
+		region->bend_up = bend_up;
+		region->bend_down = bend_down;
+		region->bend_step = bend_step;
+
+		// CCs
 		for (int i = 0; i < 128; ++i)
 		{
+			// input control
 			region->locc[i] = locc[i];
 			region->hicc[i] = hicc[i];
 			region->start_locc[i] = start_locc[i];
@@ -277,6 +399,19 @@ namespace sfz
 			region->stop_hicc[i] = stop_hicc[i];
 			region->on_locc[i] = on_locc[i];
 			region->on_hicc[i] = on_hicc[i];
+
+			// sample player
+			region->delay_oncc[i] = delay_oncc[i];
+			region->delay_samples_oncc[i] = delay_samples_oncc[i];
+			region->offset_oncc[i] = offset_oncc[i];
+
+			// amplifier
+			region->amp_velcurve_[i] = amp_velcurve_[i];
+			region->gain_oncc[i] = gain_oncc[i];
+			region->xfin_locc[i] = xfin_locc[i];
+			region->xfin_hicc[i] = xfin_hicc[i];
+			region->xfout_locc[i] = xfout_locc[i];
+			region->xfout_hicc[i] = xfout_hicc[i];
 		}
 
 		return region;
@@ -410,6 +545,7 @@ namespace sfz
 		std::string key = token.substr(0, delimiter_index);
 		std::string value = token.substr(delimiter_index + 1);
 
+		// sample definition
 		if ("sample" == key) 
 		{
 			switch (_current_section)
@@ -420,6 +556,8 @@ namespace sfz
 				_current_group->sample = value;
 			}
 		}
+
+		// input controls
 		else if ("lochan" == key)
 		{
 			switch (_current_section)
@@ -788,12 +926,481 @@ namespace sfz
 					_current_group->off_mode = OFF_NORMAL;
 			}
 		}
+
+		// sample player
+		else if ("count" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->count = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->count = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("delay" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->delay = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->delay = boost::lexical_cast<float>(value);
+			}
+		}
+		else if ("delay_random" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->delay_random = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->delay_random = boost::lexical_cast<float>(value);
+			}
+		}
+		else if ("delay_beats" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->delay_beats = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->delay_beats = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("stop_beats" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->stop_beats = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->stop_beats = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("delay_samples" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->delay_samples = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->delay_samples = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("end" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->end = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->end = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("loop_crossfade" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->loop_crossfade = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->loop_crossfade = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("offset_random" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->offset_random = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->offset_random = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("loop_mode" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				if (value == "no_loop")
+					_current_region->loop_mode = NO_LOOP;
+				else if (value == "one_shot")
+					_current_region->loop_mode = ONE_SHOT;
+				else if (value == "loop_continous")
+					_current_region->loop_mode = LOOP_CONTINOUS;
+				else if (value == "loop_sustain")
+					_current_region->loop_mode = LOOP_SUSTAIN;
+			case GROUP:
+				if (value == "no_loop")
+					_current_group->loop_mode = NO_LOOP;
+				else if (value == "one_shot")
+					_current_group->loop_mode = ONE_SHOT;
+				else if (value == "loop_continous")
+					_current_group->loop_mode = LOOP_CONTINOUS;
+				else if (value == "loop_sustain")
+					_current_group->loop_mode = LOOP_SUSTAIN;
+			}
+		}
+		else if ("loop_start" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->loop_start = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->loop_start = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("loop_end" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->loop_end = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->loop_end = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("sync_beats" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->sync_beats = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->sync_beats = boost::lexical_cast<float>(value);
+			}
+		}
+		else if ("sync_offset" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->sync_offset = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->sync_offset = boost::lexical_cast<float>(value);
+			}
+		}
+
+		// amplifier
+		else if ("volume" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->volume = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->volume = boost::lexical_cast<float>(value);
+			}
+		}
+		else if ("pan" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->pan = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->pan = boost::lexical_cast<float>(value);
+			}
+		}
+		else if ("width" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->width = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->width = boost::lexical_cast<float>(value);
+			}
+		}
+		else if ("position" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->position = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->position = boost::lexical_cast<float>(value);
+			}
+		}
+		else if ("amp_keytrack" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->amp_keytrack = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->amp_keytrack = boost::lexical_cast<float>(value);
+			}
+		}
+		else if ("amp_keycenter" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->amp_keycenter = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->amp_keycenter = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("amp_veltrack" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->amp_veltrack = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->amp_veltrack = boost::lexical_cast<float>(value);
+			}
+		}
+		else if ("amp_random" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->amp_random = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->amp_random = boost::lexical_cast<float>(value);
+			}
+		}
+		else if ("rt_decay" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->rt_decay = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->rt_decay = boost::lexical_cast<float>(value);
+			}
+		}
+		else if ("xfin_lokey" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->xfin_lokey = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->xfin_lokey = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("xfin_hikey" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->xfin_hikey = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->xfin_hikey = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("xfout_lokey" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->xfout_lokey = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->xfout_lokey = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("xfout_hikey" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->xfout_hikey = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->xfout_hikey = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("xf_keycurve" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				if (value == "gain")
+					_current_region->xf_keycurve = GAIN;
+				else if (value == "power")
+					_current_region->xf_keycurve = POWER;
+			case GROUP:
+				if (value == "gain")
+					_current_group->xf_keycurve = GAIN;
+				else if (value == "power")
+					_current_group->xf_keycurve = POWER;
+			}
+		}
+		else if ("xfin_lovel" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->xfin_lovel = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->xfin_lovel = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("xfin_hivel" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->xfin_hivel = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->xfin_hivel = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("xfout_lovel" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->xfout_lovel = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->xfout_lovel = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("xfout_hivel" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->xfout_hivel = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->xfout_hivel = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("xf_velcurve" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				if (value == "gain")
+					_current_region->xf_velcurve = GAIN;
+				else if (value == "power")
+					_current_region->xf_velcurve = POWER;
+			case GROUP:
+				if (value == "gain")
+					_current_group->xf_velcurve = GAIN;
+				else if (value == "power")
+					_current_group->xf_velcurve = POWER;
+			}
+		}
+		else if ("xf_cccurve" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				if (value == "gain")
+					_current_region->xf_cccurve = GAIN;
+				else if (value == "power")
+					_current_region->xf_cccurve = POWER;
+			case GROUP:
+				if (value == "gain")
+					_current_group->xf_cccurve = GAIN;
+				else if (value == "power")
+					_current_group->xf_cccurve = POWER;
+			}
+		}
+		
+		// pitch
+		else if ("transpose" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->transpose = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->transpose = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("tune" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->tune = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->tune = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("pitch_keycenter" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->pitch_keycenter = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->pitch_keycenter = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("pitch_keytrack" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->pitch_keytrack = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->pitch_keytrack = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("pitch_veltrack" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->pitch_veltrack = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->pitch_veltrack = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("pitch_random" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->pitch_random = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->pitch_random = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("bend_up" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->bend_up = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->bend_up = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("bend_down" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->bend_down = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->bend_down = boost::lexical_cast<int>(value);
+			}
+		}
+		else if ("bend_step" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->bend_step = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->bend_step = boost::lexical_cast<int>(value);
+			}
+		}
 		else
 		{
 			std::string::size_type delimiter_index = key.find("cc");
 			std::string key_cc = key.substr(0, delimiter_index);
 			int num_cc = boost::lexical_cast<int>(key.substr(delimiter_index + 2));
 
+			// input controls
 			if ("lo" == key_cc)
 			{
 				switch (_current_section)
@@ -872,6 +1479,90 @@ namespace sfz
 					_current_region->on_hicc[num_cc] = boost::lexical_cast<int>(value);
 				case GROUP:
 					_current_group->on_hicc[num_cc] = boost::lexical_cast<int>(value);
+				}
+			}
+
+			// sample player
+			else if ("delay_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->delay_oncc[num_cc] = boost::lexical_cast<float>(value);
+				case GROUP:
+					_current_group->delay_oncc[num_cc] = boost::lexical_cast<float>(value);
+				}
+			}
+			else if ("delay_samples_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->delay_samples_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->delay_samples_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+			}
+			else if ("offset_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->offset_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->offset_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+			}
+
+			// amplifier
+			else if ("gain_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->gain_oncc[num_cc] = boost::lexical_cast<float>(value);
+				case GROUP:
+					_current_group->gain_oncc[num_cc] = boost::lexical_cast<float>(value);
+				}
+			}
+			else if ("xfin_lo" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->xfin_locc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->xfin_locc[num_cc] = boost::lexical_cast<int>(value);
+				}
+			}
+			else if ("xfin_hi" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->xfin_hicc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->xfin_hicc[num_cc] = boost::lexical_cast<int>(value);
+				}
+			}
+			else if ("xfout_lo" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->xfout_locc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->xfout_locc[num_cc] = boost::lexical_cast<int>(value);
+				}
+			}
+			else if ("xfout_hi" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->xfout_hicc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->xfout_hicc[num_cc] = boost::lexical_cast<int>(value);
 				}
 			}
 		}

@@ -34,8 +34,9 @@ namespace sfz
 {
 
 	// Forward declarations
-	class Group;
+	class Articulation;
 	class Region;
+	class Group;
 	class Instrument;
 	class File;
 
@@ -43,9 +44,20 @@ namespace sfz
 	enum sw_vel_t    { VEL_CURRENT, VEL_PREVIOUS };
 	enum off_mode_t  { OFF_FAST, OFF_NORMAL };
 	enum loop_mode_t { NO_LOOP, ONE_SHOT, LOOP_CONTINOUS, LOOP_SUSTAIN };
+	enum curve_t  { GAIN, POWER };
 
 	typedef unsigned char trigger_t;
 	typedef unsigned char uint8_t;
+
+	/////////////////////////////////////////////////////////////
+	// class Articulation
+
+	class Articulation
+	{
+	public:
+		Articulation();
+		virtual ~Articulation();
+	};
 
 	/////////////////////////////////////////////////////////////
 	// class Region
@@ -69,7 +81,8 @@ namespace sfz
 			       uint8_t prog, float rand, trigger_t trig, uint8_t* cc,
 			       float timer, uint8_t seq, bool* sw, uint8_t last_sw_key, uint8_t prev_sw_key);
 
-// 		Articulation* GetArticulation(int bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft, uint8_t cc*);
+		/// Return an articulation for the current state
+ 		Articulation* GetArticulation(int bend, uint8_t bpm, uint8_t chanaft, uint8_t polyaft, uint8_t* cc);
 
 		// unique region id
 		int id;
@@ -121,29 +134,29 @@ namespace sfz
 		int offset; int offset_random; int offset_oncc[128];
 		loop_mode_t loop_mode;
 		int loop_start; int loop_end;
-		int sync_beats;
-		int sync_offset;
+		float sync_beats;
+		float sync_offset;
 		
 		// amplifier
-		int volume;
-		int pan;
-		int width;
-		int position;
-		int amp_keytrack; int amp_keycenter; int amp_veltrack; int amp_velcurve_N; int amp_random;
-		int rt_decay;
-		int gain_oncc[128];
+		float volume;
+		float pan;
+		float width;
+		float position;
+		float amp_keytrack; int amp_keycenter; float amp_veltrack; float amp_velcurve_[128]; float amp_random;
+		float rt_decay;
+		float gain_oncc[128];
 		int xfin_lokey; int xfin_hikey;
 		int xfout_lokey; int xfout_hikey;
-		int xf_keycurve;
+		curve_t xf_keycurve;
 		int xfin_lovel; int xfin_hivel;
 		int xfout_lovel; int xfout_hivel;
-		int xf_velcurve;
-		int xfin_locc; int xfin_hicc;
-		int xfout_locc; int xfout_hicc;
-		int xf_cccurve;
+		curve_t xf_velcurve;
+		int xfin_locc[128]; int xfin_hicc[128];
+		int xfout_locc[128]; int xfout_hicc[128];
+		curve_t xf_cccurve;
 
 		// pitch
-		int traspose;
+		int transpose;
 		int tune;
 		int pitch_keycenter; int pitch_keytrack; int pitch_veltrack; int pitch_random;
 		int bend_up; int bend_down; int bend_step;
@@ -218,6 +231,43 @@ namespace sfz
 		off_mode_t off_mode;
 
 		int on_locc[128]; int on_hicc[128];
+
+		// sample player
+		int count;
+		float delay; float delay_random; float delay_oncc[128];
+		int delay_beats; int stop_beats;
+		int delay_samples; int delay_samples_oncc[128];
+		int end;
+		int loop_crossfade;
+		int offset; int offset_random; int offset_oncc[128];
+		loop_mode_t loop_mode;
+		int loop_start; int loop_end;
+		float sync_beats;
+		float sync_offset;
+		
+		// amplifier
+		float volume;
+		float pan;
+		float width;
+		float position;
+		float amp_keytrack; int amp_keycenter; float amp_veltrack; float amp_velcurve_[128]; float amp_random;
+		float rt_decay;
+		float gain_oncc[128];
+		int xfin_lokey; int xfin_hikey;
+		int xfout_lokey; int xfout_hikey;
+		curve_t xf_keycurve;
+		int xfin_lovel; int xfin_hivel;
+		int xfout_lovel; int xfout_hivel;
+		curve_t xf_velcurve;
+		int xfin_locc[128]; int xfin_hicc[128];
+		int xfout_locc[128]; int xfout_hicc[128];
+		curve_t xf_cccurve;
+
+		// pitch
+		int transpose;
+		int tune;
+		int pitch_keycenter; int pitch_keytrack; int pitch_veltrack; int pitch_random;
+		int bend_up; int bend_down; int bend_step;
 	};
 
 	/////////////////////////////////////////////////////////////
