@@ -40,8 +40,9 @@ namespace sfz
 	class File;
 
 	// Enumerations
-	enum sw_vel_t   { VEL_CURRENT, VEL_PREVIOUS };
-	enum off_mode_t { OFF_FAST, OFF_NORMAL };
+	enum sw_vel_t    { VEL_CURRENT, VEL_PREVIOUS };
+	enum off_mode_t  { OFF_FAST, OFF_NORMAL };
+	enum loop_mode_t { NO_LOOP, ONE_SHOT, LOOP_CONTINOUS, LOOP_SUSTAIN };
 
 	typedef unsigned char trigger_t;
 	typedef unsigned char uint8_t;
@@ -113,7 +114,7 @@ namespace sfz
 		// sample player
 		int count;
 		float delay; float delay_random; float delay_oncc[128];
-		int delay_beats; itn stop_beats;
+		int delay_beats; int stop_beats;
 		int delay_samples; int delay_samples_oncc[128];
 		int end;
 		int loop_crossfade;
@@ -121,14 +122,14 @@ namespace sfz
 		loop_mode_t loop_mode;
 		int loop_start; int loop_end;
 		int sync_beats;
-		itn sync_offset;
+		int sync_offset;
 		
 		// amplifier
 		int volume;
 		int pan;
 		int width;
 		int position;
-		int amp_keytrack; int amp_keycenter; int amp_veltrack; _nt amp_velcurve_N; int amp_random;
+		int amp_keytrack; int amp_keycenter; int amp_veltrack; int amp_velcurve_N; int amp_random;
 		int rt_decay;
 		int gain_oncc[128];
 		int xfin_lokey; int xfin_hikey;
