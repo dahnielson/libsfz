@@ -1394,6 +1394,8 @@ namespace sfz
 				_current_group->bend_step = boost::lexical_cast<int>(value);
 			}
 		}
+
+		// CCs
 		else
 		{
 			std::string::size_type delimiter_index = key.find("cc");
