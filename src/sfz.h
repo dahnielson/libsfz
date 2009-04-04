@@ -27,6 +27,8 @@
 #include <string>
 #include <stdexcept>
 
+#include <boost/array.hpp>
+
 #define TRIGGER_ATTACK  ((unsigned char) (1 << 0)) // 0x01
 #define TRIGGER_RELEASE ((unsigned char) (1 << 1)) // 0x02
 #define TRIGGER_FIRST   ((unsigned char) (1 << 2)) // 0x04
@@ -199,7 +201,7 @@ namespace sfz
 		int   lochan;    int   hichan;
 		int   lokey;     int   hikey;
 		int   lovel;     int   hivel;
-		int   locc[128]; int   hicc[128];
+		boost::array<int, 128> locc; boost::array<int, 128> hicc;
 		int   lobend;    int   hibend;
 		int   lobpm;     int   hibpm;
 		int   lochanaft; int   hichanaft;
@@ -211,8 +213,8 @@ namespace sfz
 		int seq_length;  
 		int seq_position;
 
-		int start_locc[128]; int start_hicc[128];
-		int stop_locc[128];  int stop_hicc[128];
+		boost::array<int, 128> start_locc; boost::array<int, 128> start_hicc;
+		boost::array<int, 128> stop_locc;  boost::array<int, 128> stop_hicc;
 
 		int sw_lokey;    int sw_hikey;  
 		int sw_last;
@@ -227,16 +229,16 @@ namespace sfz
 		optional<int> off_by;
 		off_mode_t off_mode;
 
-		int on_locc[128]; int on_hicc[128];
+		boost::array<int, 128> on_locc; boost::array<int, 128> on_hicc;
 
 		// sample player
 		optional<int> count;
-		optional<float> delay; optional<float> delay_random; optional<float> delay_oncc[128];
+		optional<float> delay; optional<float> delay_random; boost::array<optional<float>, 128> delay_oncc;
 		optional<int> delay_beats; optional<int> stop_beats;
-		optional<int> delay_samples; optional<int> delay_samples_oncc[128];
+		optional<int> delay_samples; boost::array<optional<int>, 128> delay_samples_oncc;
 		optional<int> end;
 		optional<int> loop_crossfade;
-		optional<int> offset; optional<int> offset_random; optional<int> offset_oncc[128];
+		optional<int> offset; optional<int> offset_random; boost::array<optional<int>, 128> offset_oncc;
 		loop_mode_t loop_mode;
 		optional<int> loop_start; optional<int> loop_end;
 		optional<float> sync_beats;
@@ -247,17 +249,17 @@ namespace sfz
 		float pan;
 		float width;
 		float position;
-		float amp_keytrack; optional<int> amp_keycenter; float amp_veltrack; optional<float> amp_velcurve_[128]; float amp_random;
+		float amp_keytrack; optional<int> amp_keycenter; float amp_veltrack; boost::array<optional<float>, 128> amp_velcurve_; float amp_random;
 		float rt_decay;
-		float gain_oncc[128];
+		boost::array<float, 128> gain_oncc;
 		optional<int> xfin_lokey; optional<int> xfin_hikey;
 		optional<int> xfout_lokey; optional<int> xfout_hikey;
 		curve_t xf_keycurve;
 		optional<int> xfin_lovel; optional<int> xfin_hivel;
 		optional<int> xfout_lovel; optional<int> xfout_hivel;
 		curve_t xf_velcurve;
-		optional<int> xfin_locc[128]; optional<int> xfin_hicc[128];
-		optional<int> xfout_locc[128]; optional<int> xfout_hicc[128];
+		boost::array<optional<int>, 128> xfin_locc; boost::array<optional<int>, 128> xfin_hicc;
+		boost::array<optional<int>, 128> xfout_locc; boost::array<optional<int>, 128> xfout_hicc;
 		curve_t xf_cccurve;
 
 		// pitch
