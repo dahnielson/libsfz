@@ -1398,6 +1398,8 @@ namespace sfz
 			}
 		}
 
+		//fixme: parse amp_velcurve_N
+
 		// CCs
 		else
 		{
