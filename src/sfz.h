@@ -241,35 +241,35 @@ namespace sfz
 		optional<int> delay_beats; optional<int> stop_beats;
 		optional<int> delay_samples; boost::array<optional<int>, 128> delay_samples_oncc;
 		optional<int> end;
-		optional<int> loop_crossfade;
+		optional<float> loop_crossfade;
 		optional<int> offset; optional<int> offset_random; boost::array<optional<int>, 128> offset_oncc;
 		loop_mode_t loop_mode;
 		optional<int> loop_start; optional<int> loop_end;
-		optional<float> sync_beats;
-		optional<float> sync_offset;
+		optional<int> sync_beats;
+		optional<int> sync_offset;
 		
 		// amplifier
 		float volume;
 		float pan;
 		float width;
 		float position;
-		float amp_keytrack; optional<int> amp_keycenter; float amp_veltrack; boost::array<optional<float>, 128> amp_velcurve_; float amp_random;
+		float amp_keytrack; int amp_keycenter; float amp_veltrack; boost::array<float, 128> amp_velcurve_; float amp_random;
 		float rt_decay;
 		boost::array<float, 128> gain_oncc;
-		optional<int> xfin_lokey; optional<int> xfin_hikey;
-		optional<int> xfout_lokey; optional<int> xfout_hikey;
+		int xfin_lokey; int xfin_hikey;
+		int xfout_lokey; int xfout_hikey;
 		curve_t xf_keycurve;
-		optional<int> xfin_lovel; optional<int> xfin_hivel;
-		optional<int> xfout_lovel; optional<int> xfout_hivel;
+		int xfin_lovel; int xfin_hivel;
+		int xfout_lovel; int xfout_hivel;
 		curve_t xf_velcurve;
-		boost::array<optional<int>, 128> xfin_locc; boost::array<optional<int>, 128> xfin_hicc;
-		boost::array<optional<int>, 128> xfout_locc; boost::array<optional<int>, 128> xfout_hicc;
+		boost::array<int, 128> xfin_locc; boost::array<int, 128> xfin_hicc;
+		boost::array<int, 128> xfout_locc; boost::array<int, 128> xfout_hicc;
 		curve_t xf_cccurve;
 
 		// pitch
 		int transpose;
 		int tune;
-		optional<int> pitch_keycenter; int pitch_keytrack; int pitch_veltrack; int pitch_random;
+		int pitch_keycenter; int pitch_keytrack; int pitch_veltrack; int pitch_random;
 		int bend_up; int bend_down; int bend_step;
 
 		// filter

@@ -263,32 +263,28 @@ namespace sfz
 		width = 100;
 		position = 0;
 		amp_keytrack = 0;
-		amp_keycenter.unset();
-		amp_veltrack = 0;
+		amp_keycenter = 60;
+		amp_veltrack = 100;
 		amp_random = 0;
 		rt_decay = 0;
-		xfin_lokey.unset();
-		xfin_hikey.unset();
-		xfout_lokey.unset();
-		xfout_hikey.unset();
+		xfin_lokey = 0; xfin_hikey = 0;
+		xfout_lokey = 127; xfout_hikey = 127;
 		xf_keycurve = POWER;
-		xfin_lovel.unset();
-		xfin_hivel.unset();
-		xfout_lovel.unset();
-		xfout_hivel.unset();
+		xfin_lovel = 0;	xfin_hivel = 0;
+		xfout_lovel = 127; xfout_hivel = 127;
 		xf_velcurve = POWER;
 		xf_cccurve = POWER;
 
 		// pitch
 		transpose = 0;
 		tune = 0;
-		pitch_keycenter.unset();
+		pitch_keycenter = 60;
 		pitch_keytrack = 100;
 		pitch_veltrack = 0;
 		pitch_random = 0;
-		bend_up = 0;
-		bend_down = 0;
-		bend_step = 0;
+		bend_up = 200;
+		bend_down = -200;
+		bend_step = 1;
 
 		// filter
 		fil_type = LPF_2P;
@@ -347,12 +343,12 @@ namespace sfz
 			offset_oncc[i].unset();
 
 			// amplifier
-			amp_velcurve_[i] = 0;
+			amp_velcurve_[i] = 0; //fixme: 20 log (127^2 / i^2)
 			gain_oncc[i] = 0;
-			xfin_locc[i].unset();
-			xfin_hicc[i].unset();
-			xfout_locc[i].unset();
-			xfout_hicc[i].unset();
+			xfin_locc[i] = 0;
+			xfin_hicc[i] = 0;
+			xfout_locc[i] = 127;
+			xfout_hicc[i] = 127;
 
 			// filter
 			cutoff_oncc[i] = 0;
@@ -1234,9 +1230,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->loop_crossfade = boost::lexical_cast<int>(value);
+				_current_region->loop_crossfade = boost::lexical_cast<float>(value);
 			case GROUP:
-				_current_group->loop_crossfade = boost::lexical_cast<int>(value);
+				_current_group->loop_crossfade = boost::lexical_cast<float>(value);
 			}
 			return;
 		}
@@ -1303,9 +1299,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->sync_beats = boost::lexical_cast<float>(value);
+				_current_region->sync_beats = boost::lexical_cast<int>(value);
 			case GROUP:
-				_current_group->sync_beats = boost::lexical_cast<float>(value);
+				_current_group->sync_beats = boost::lexical_cast<int>(value);
 			}
 			return;
 		}
@@ -1314,9 +1310,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->sync_offset = boost::lexical_cast<float>(value);
+				_current_region->sync_offset = boost::lexical_cast<int>(value);
 			case GROUP:
-				_current_group->sync_offset = boost::lexical_cast<float>(value);
+				_current_group->sync_offset = boost::lexical_cast<int>(value);
 			}
 			return;
 		}
