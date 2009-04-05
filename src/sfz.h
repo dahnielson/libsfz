@@ -290,6 +290,16 @@ namespace sfz
 		int fil_keycenter; int fil2_keycenter;
 		int fil_veltrack; int fil2_veltrack;
 		int fil_random; int fil2_random;
+
+		// per voice equalizer
+		float eq1_freq; float eq2_freq; float eq3_freq;
+		boost::array<float, 128> eq1_freq_oncc; boost::array<float, 128> eq2_freq_oncc; boost::array<float, 128> eq3_freq_oncc;
+		float eq1_vel2freq; float eq2_vel2freq; float eq3_vel2freq;
+		float eq1_bw; float eq2_bw; float eq3_bw;
+		boost::array<float, 128> eq1_bw_oncc; boost::array<float, 128> eq2_bw_oncc; boost::array<float, 128> eq3_bw_oncc;
+		float eq1_gain; float eq2_gain; float eq3_gain;
+		boost::array<float, 128> eq1_gain_oncc; boost::array<float, 128> eq2_gain_oncc; boost::array<float, 128> eq3_gain_oncc;
+		float eq1_vel2gain; float eq2_vel2gain; float eq3_vel2gain;
 	};
 	
 	/////////////////////////////////////////////////////////////

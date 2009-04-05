@@ -309,6 +309,23 @@ namespace sfz
 		fil2_veltrack = 0;
 		fil2_random = 0;
 
+		// per voice equalizer
+		eq1_freq = 50;
+		eq2_freq = 500;
+		eq3_freq = 5000;
+		eq1_vel2freq = 0;
+		eq2_vel2freq = 0;
+		eq3_vel2freq = 0;
+		eq1_bw = 1;
+		eq2_bw = 1;
+		eq3_bw = 1;
+		eq1_gain = 0;
+		eq2_gain = 0;
+		eq3_gain = 0;
+		eq1_vel2gain = 0;
+		eq2_vel2gain = 0;
+		eq3_vel2gain = 0;
+
 		// CCs defaults
 		for (int i = 0; i < 128; ++i)
 		{
@@ -353,6 +370,17 @@ namespace sfz
 			resonance2_smoothcc[i] = 0;
 			resonance2_stepcc[i] = 0;
 			resonance2_curvecc[i] = 0;
+
+			// per voice equalizer
+			eq1_freq_oncc[i] = 0;
+			eq2_freq_oncc[i] = 0;
+			eq3_freq_oncc[i] = 0;
+			eq1_bw_oncc[i] = 0;
+			eq2_bw_oncc[i] = 0;
+			eq3_bw_oncc[i] = 0;
+			eq1_gain_oncc[i] = 0;
+			eq2_gain_oncc[i] = 0;
+			eq3_gain_oncc[i] = 0;
 		}
 	}
 
@@ -504,6 +532,32 @@ namespace sfz
 		region->fil2_keycenter = fil2_keycenter;
 		region->fil2_veltrack = fil2_veltrack;
 		region->fil2_random = fil2_random;
+
+		// per voice equalizer
+		region->eq1_freq = eq1_freq;
+		region->eq2_freq = eq2_freq;
+		region->eq3_freq = eq3_freq;
+		region->eq1_freq_oncc = eq1_freq_oncc;
+		region->eq2_freq_oncc = eq2_freq_oncc;
+		region->eq3_freq_oncc = eq3_freq_oncc;
+		region->eq1_vel2freq = eq1_vel2freq;
+		region->eq2_vel2freq = eq2_vel2freq;
+		region->eq3_vel2freq = eq3_vel2freq;
+		region->eq1_bw = eq1_bw;
+		region->eq2_bw = eq2_bw;
+		region->eq3_bw = eq3_bw;
+		region->eq1_bw_oncc = eq1_bw_oncc;
+		region->eq2_bw_oncc = eq2_bw_oncc;
+		region->eq3_bw_oncc = eq3_bw_oncc;
+		region->eq1_gain = eq1_gain;
+		region->eq2_gain = eq2_gain;
+		region->eq3_gain = eq3_gain;
+		region->eq1_gain_oncc = eq1_gain_oncc;
+		region->eq2_gain_oncc = eq2_gain_oncc;
+		region->eq3_gain_oncc = eq3_gain_oncc;
+		region->eq1_vel2gain = eq1_vel2gain;
+		region->eq2_vel2gain = eq2_vel2gain;
+		region->eq3_vel2gain = eq3_vel2gain;
 
 		return region;
 	}
@@ -1912,6 +1966,173 @@ namespace sfz
 			return;
 		}
 
+		// per voice equalizer
+		else if ("eq1_freq" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq1_freq = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq1_freq = boost::lexical_cast<float>(value);
+			}
+			return;
+		}		
+		else if ("eq2_freq" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq2_freq = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq2_freq = boost::lexical_cast<float>(value);
+			}
+			return;
+		}		
+		else if ("eq3_freq" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq3_freq = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq3_freq = boost::lexical_cast<float>(value);
+			}
+			return;
+		}
+		else if ("eq1_vel2freq" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq1_vel2freq = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq1_vel2freq = boost::lexical_cast<float>(value);
+			}
+			return;
+		}		
+		else if ("eq2_vel2freq" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq2_vel2freq = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq2_vel2freq = boost::lexical_cast<float>(value);
+			}
+			return;
+		}		
+		else if ("eq3_vel2freq" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq3_vel2freq = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq3_vel2freq = boost::lexical_cast<float>(value);
+			}
+			return;
+		}		
+		else if ("eq1_bw" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq1_bw = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq1_bw = boost::lexical_cast<float>(value);
+			}
+			return;
+		}		
+		else if ("eq2_bw" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq2_bw = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq2_bw = boost::lexical_cast<float>(value);
+			}
+			return;
+		}		
+		else if ("eq3_bw" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq3_bw = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq3_bw = boost::lexical_cast<float>(value);
+			}
+			return;
+		}
+		else if ("eq1_gain" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq1_gain = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq1_gain = boost::lexical_cast<float>(value);
+			}
+			return;
+		}		
+		else if ("eq2_gain" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq2_gain = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq2_gain = boost::lexical_cast<float>(value);
+			}
+			return;
+		}		
+		else if ("eq3_gain" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq3_gain = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq3_gain = boost::lexical_cast<float>(value);
+			}
+			return;
+		}
+		else if ("eq1_vel2gain" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq1_vel2gain = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq1_vel2gain = boost::lexical_cast<float>(value);
+			}
+			return;
+		}		
+		else if ("eq2_vel2gain" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq2_vel2gain = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq2_vel2gain = boost::lexical_cast<float>(value);
+			}
+			return;
+		}		
+		else if ("eq3_vel2gain" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->eq3_vel2gain = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->eq3_vel2gain = boost::lexical_cast<float>(value);
+			}
+			return;
+		}
+
 		//fixme: parse amp_velcurve_N
 
 		// CCs
@@ -2277,6 +2498,107 @@ namespace sfz
 					_current_region->resonance2_curvecc[num_cc] = boost::lexical_cast<int>(value);
 				case GROUP:
 					_current_group->resonance2_curvecc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+
+			// per voice equalizer
+			else if ("eq1_freq_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->eq1_freq_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->eq1_freq_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("eq2_freq_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->eq2_freq_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->eq2_freq_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("eq3_freq_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->eq3_freq_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->eq3_freq_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("eq1_bw_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->eq1_bw_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->eq1_bw_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("eq2_bw_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->eq2_bw_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->eq2_bw_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("eq3_bw_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->eq3_bw_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->eq3_bw_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("eq1_gain_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->eq1_gain_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->eq1_gain_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("eq2_gain_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->eq2_gain_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->eq2_gain_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("eq3_gain_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->eq3_gain_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->eq3_gain_oncc[num_cc] = boost::lexical_cast<int>(value);
 				}
 				return;
 			}
