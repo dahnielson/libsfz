@@ -289,23 +289,23 @@ namespace sfz
 		bend_step = 0;
 
 		// filter
-		fil_type = LPF_1P;
+		fil_type = LPF_2P;
 		cutoff.unset();
 		cutoff_chanaft = 0;
 		cutoff_polyaft = 0;
 		resonance = 0;
 		fil_keytrack = 0;
-		fil_keycenter = 0;
+		fil_keycenter = 60;
 		fil_veltrack = 0;
 		fil_random = 0;
 
-		fil2_type = LPF_1P;
+		fil2_type = LPF_2P;
 		cutoff2.unset();
 		cutoff2_chanaft = 0;
 		cutoff2_polyaft = 0;
 		resonance2 = 0;
 		fil2_keytrack = 0;
-		fil2_keycenter = 0;
+		fil2_keycenter = 60;
 		fil2_veltrack = 0;
 		fil2_random = 0;
 
