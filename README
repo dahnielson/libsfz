@@ -2,5 +2,10 @@ TODO
 ----
 
 * Allow literal note names in addition to MIDI note numbers
-* The control header directives should really be implemented in a preprocessor
+* The <control> header directives should really be implemented in a preprocessor
 * Check that opcode values are in range
+* Get the semantics of EG and LFO routing clarified
+* Parse amp_velcurve_N
+* Parse egN_*
+* Parse lfoN_*
+* Parse <effects> header
