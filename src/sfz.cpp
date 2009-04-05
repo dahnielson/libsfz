@@ -212,10 +212,12 @@ namespace sfz
 	void
 	Group::Reset()
 	{
+		// This is where all the default values are set.
+
 		// sample definition default
 		sample = "";
 
-		// input control defaults
+		// input control
 		lochan = 1; hichan = 16;
 		lokey = 0; hikey = 127;
 		lovel = 0; hivel = 127;
@@ -243,7 +245,7 @@ namespace sfz
 		off_by.unset();
 		off_mode = OFF_FAST;
 
-		// sample player defaults
+		// sample player
 		count.unset();
 		delay.unset(); delay_random.unset(); 
 		delay_beats.unset(); stop_beats.unset();
@@ -255,7 +257,7 @@ namespace sfz
 		loop_start.unset(); loop_end.unset();
 		sync_beats.unset(); sync_offset.unset();
 
-		// amplifier defaults
+		// amplifier
 		volume = 0;
 		pan = 0;
 		width = 100;
@@ -277,7 +279,7 @@ namespace sfz
 		xf_velcurve = POWER;
 		xf_cccurve = POWER;
 
-		// pitch defaults
+		// pitch
 		transpose = 0;
 		tune = 0;
 		pitch_keycenter.unset();
@@ -326,7 +328,7 @@ namespace sfz
 		eq2_vel2gain = 0;
 		eq3_vel2gain = 0;
 
-		// CCs defaults
+		// CCs
 		for (int i = 0; i < 128; ++i)
 		{
 			// input control
@@ -387,6 +389,8 @@ namespace sfz
 	Region*
 	Group::RegionFactory()
 	{
+		// This is where the current group setting are copied to the new region.
+
 		Region* region = new Region();
 
 		region->id = id++;
