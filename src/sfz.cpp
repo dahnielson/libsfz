@@ -436,7 +436,10 @@ namespace sfz
 
 	File::File(std::ifstream file) :
 		_instrument(new Instrument()),
-		_current_section(GROUP)
+		_current_section(GROUP),
+		default_path(""),
+		octave_offset(0),
+		note_offset(0)
 	{
 		enum token_type_t { HEADER, OPCODE };
 		token_type_t token_type;
@@ -543,6 +546,13 @@ namespace sfz
 			_current_region = _current_group->RegionFactory();
 			_instrument->regions.push_back(_current_region);
 		}
+		else if (token == "<control>")
+		{
+			_current_section = CONTROL;
+			default_path = "";
+			octave_offset = 0;
+			note_offset = 0;
+		}
 		else 
 		{
 			_current_section = UNKNOWN;
@@ -566,9 +576,38 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->sample = value;
+				_current_region->sample = default_path + value;
 			case GROUP:
-				_current_group->sample = value;
+				_current_group->sample = default_path + value;
+			}
+			return;
+		}
+
+		// control header directives
+		else if ("default_path" == key)
+		{
+			switch (_current_section)
+			{
+			case CONTROL:
+				default_path = value;
+			}
+			return;
+		}
+		else if ("octave_offset" == key)
+		{
+			switch (_current_section)
+			{
+			case CONTROL:
+				octave_offset = boost::lexical_cast<int>(value);
+			}
+			return;
+		}
+		else if ("note_offset" == key)
+		{
+			switch (_current_section)
+			{
+			case CONTROL:
+				note_offset = boost::lexical_cast<int>(value);
 			}
 			return;
 		}
@@ -601,9 +640,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->lokey = boost::lexical_cast<int>(value);
+				_current_region->lokey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->lokey = boost::lexical_cast<int>(value);
+				_current_group->lokey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -612,9 +651,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->hikey = boost::lexical_cast<int>(value);
+				_current_region->hikey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->hikey = boost::lexical_cast<int>(value);
+				_current_group->hikey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -623,11 +662,11 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->lokey = boost::lexical_cast<int>(value);
-				_current_region->hikey = boost::lexical_cast<int>(value);
+				_current_region->lokey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
+				_current_region->hikey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->lokey = boost::lexical_cast<int>(value);
-				_current_group->hikey = boost::lexical_cast<int>(value);
+				_current_group->lokey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
+				_current_group->hikey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -834,9 +873,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->sw_lokey = boost::lexical_cast<int>(value);
+				_current_region->sw_lokey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->sw_lokey = boost::lexical_cast<int>(value);
+				_current_group->sw_lokey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -845,9 +884,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->sw_hikey = boost::lexical_cast<int>(value);
+				_current_region->sw_hikey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->sw_hikey = boost::lexical_cast<int>(value);
+				_current_group->sw_hikey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -856,9 +895,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->sw_last = boost::lexical_cast<int>(value);
+				_current_region->sw_last = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->sw_last = boost::lexical_cast<int>(value);
+				_current_group->sw_last = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -867,9 +906,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->sw_down = boost::lexical_cast<int>(value);
+				_current_region->sw_down = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->sw_down = boost::lexical_cast<int>(value);
+				_current_group->sw_down = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -878,9 +917,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->sw_up = boost::lexical_cast<int>(value);
+				_current_region->sw_up = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->sw_up = boost::lexical_cast<int>(value);
+				_current_group->sw_up = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -889,9 +928,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->sw_previous = boost::lexical_cast<int>(value);
+				_current_region->sw_previous = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->sw_previous = boost::lexical_cast<int>(value);
+				_current_group->sw_previous = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -1208,9 +1247,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->amp_keycenter = boost::lexical_cast<int>(value);
+				_current_region->amp_keycenter = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->amp_keycenter = boost::lexical_cast<int>(value);
+				_current_group->amp_keycenter = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -1252,9 +1291,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->xfin_lokey = boost::lexical_cast<int>(value);
+				_current_region->xfin_lokey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->xfin_lokey = boost::lexical_cast<int>(value);
+				_current_group->xfin_lokey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -1263,9 +1302,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->xfin_hikey = boost::lexical_cast<int>(value);
+				_current_region->xfin_hikey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->xfin_hikey = boost::lexical_cast<int>(value);
+				_current_group->xfin_hikey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -1274,9 +1313,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->xfout_lokey = boost::lexical_cast<int>(value);
+				_current_region->xfout_lokey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->xfout_lokey = boost::lexical_cast<int>(value);
+				_current_group->xfout_lokey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -1285,9 +1324,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->xfout_hikey = boost::lexical_cast<int>(value);
+				_current_region->xfout_hikey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->xfout_hikey = boost::lexical_cast<int>(value);
+				_current_group->xfout_hikey = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}
@@ -1415,9 +1454,9 @@ namespace sfz
 			switch (_current_section)
 			{
 			case REGION:
-				_current_region->pitch_keycenter = boost::lexical_cast<int>(value);
+				_current_region->pitch_keycenter = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			case GROUP:
-				_current_group->pitch_keycenter = boost::lexical_cast<int>(value);
+				_current_group->pitch_keycenter = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
 			}
 			return;
 		}

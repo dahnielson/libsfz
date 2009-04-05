@@ -357,10 +357,15 @@ namespace sfz
 		Instrument* _instrument;
 
 		// state variables
-		enum section_t { UNKNOWN, GROUP, REGION };
+		enum section_t { UNKNOWN, GROUP, REGION, CONTROL };
 		section_t _current_section;
 		Region* _current_region;
 		Group* _current_group;
+
+		// control header directives
+		std::string default_path;
+		int octave_offset;
+		int note_offset;
 	};
 
 } // !namespace sfz
