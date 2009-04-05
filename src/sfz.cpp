@@ -1527,6 +1527,314 @@ namespace sfz
 			return;
 		}
 
+		// filter
+		else if ("fil_type" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				if (value == "lpf_1p")
+					_current_region->fil_type = LPF_1P;
+				else if (value == "hpf_1p")
+					_current_region->fil_type = HPF_1P;
+				else if (value == "bpf_1p")
+					_current_region->fil_type = BPF_1P;
+				else if (value == "brf_1p")
+					_current_region->fil_type = BRF_1P;
+				else if (value == "apf_1p")
+					_current_region->fil_type = APF_1P;
+				else if (value == "lpf_2p")
+					_current_region->fil_type = LPF_2P;
+				else if (value == "hpf_2p")
+					_current_region->fil_type = HPF_2P;
+				else if (value == "bpf_2p")
+					_current_region->fil_type = BPF_2P;
+				else if (value == "brf_2p")
+					_current_region->fil_type = BRF_2P;
+				else if (value == "pkf_2p")
+					_current_region->fil_type = PKF_2P;
+				else if (value == "lpf_4p")
+					_current_region->fil_type = LPF_4P;
+				else if (value == "hpf_4p")
+					_current_region->fil_type = HPF_4P;
+				else if (value == "lpf_6p")
+					_current_region->fil_type = LPF_6P;
+				else if (value == "hpf_6p")
+					_current_region->fil_type = HPF_6P;
+			case GROUP:
+				if (value == "lpf_1p")
+					_current_group->fil_type = LPF_1P;
+				else if (value == "hpf_1p")
+					_current_group->fil_type = HPF_1P;
+				else if (value == "bpf_1p")
+					_current_group->fil_type = BPF_1P;
+				else if (value == "brf_1p")
+					_current_group->fil_type = BRF_1P;
+				else if (value == "apf_1p")
+					_current_group->fil_type = APF_1P;
+				else if (value == "lpf_2p")
+					_current_group->fil_type = LPF_2P;
+				else if (value == "hpf_2p")
+					_current_group->fil_type = HPF_2P;
+				else if (value == "bpf_2p")
+					_current_group->fil_type = BPF_2P;
+				else if (value == "brf_2p")
+					_current_group->fil_type = BRF_2P;
+				else if (value == "pkf_2p")
+					_current_group->fil_type = PKF_2P;
+				else if (value == "lpf_4p")
+					_current_group->fil_type = LPF_4P;
+				else if (value == "hpf_4p")
+					_current_group->fil_type = HPF_4P;
+				else if (value == "lpf_6p")
+					_current_group->fil_type = LPF_6P;
+				else if (value == "hpf_6p")
+					_current_group->fil_type = HPF_6P;
+			}
+			return;
+		}
+		else if ("fil2_type" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				if (value == "lpf_1p")
+					_current_region->fil2_type = LPF_1P;
+				else if (value == "hpf_1p")
+					_current_region->fil2_type = HPF_1P;
+				else if (value == "bpf_1p")
+					_current_region->fil2_type = BPF_1P;
+				else if (value == "brf_1p")
+					_current_region->fil2_type = BRF_1P;
+				else if (value == "apf_1p")
+					_current_region->fil2_type = APF_1P;
+				else if (value == "lpf_2p")
+					_current_region->fil2_type = LPF_2P;
+				else if (value == "hpf_2p")
+					_current_region->fil2_type = HPF_2P;
+				else if (value == "bpf_2p")
+					_current_region->fil2_type = BPF_2P;
+				else if (value == "brf_2p")
+					_current_region->fil2_type = BRF_2P;
+				else if (value == "pkf_2p")
+					_current_region->fil2_type = PKF_2P;
+				else if (value == "lpf_4p")
+					_current_region->fil2_type = LPF_4P;
+				else if (value == "hpf_4p")
+					_current_region->fil2_type = HPF_4P;
+				else if (value == "lpf_6p")
+					_current_region->fil2_type = LPF_6P;
+				else if (value == "hpf_6p")
+					_current_region->fil2_type = HPF_6P;
+			case GROUP:
+				if (value == "lpf_1p")
+					_current_group->fil2_type = LPF_1P;
+				else if (value == "hpf_1p")
+					_current_group->fil2_type = HPF_1P;
+				else if (value == "bpf_1p")
+					_current_group->fil2_type = BPF_1P;
+				else if (value == "brf_1p")
+					_current_group->fil2_type = BRF_1P;
+				else if (value == "apf_1p")
+					_current_group->fil2_type = APF_1P;
+				else if (value == "lpf_2p")
+					_current_group->fil2_type = LPF_2P;
+				else if (value == "hpf_2p")
+					_current_group->fil2_type = HPF_2P;
+				else if (value == "bpf_2p")
+					_current_group->fil2_type = BPF_2P;
+				else if (value == "brf_2p")
+					_current_group->fil2_type = BRF_2P;
+				else if (value == "pkf_2p")
+					_current_group->fil2_type = PKF_2P;
+				else if (value == "lpf_4p")
+					_current_group->fil2_type = LPF_4P;
+				else if (value == "hpf_4p")
+					_current_group->fil2_type = HPF_4P;
+				else if (value == "lpf_6p")
+					_current_group->fil2_type = LPF_6P;
+				else if (value == "hpf_6p")
+					_current_group->fil2_type = HPF_6P;
+			}
+			return;
+		}
+		else if ("cutoff" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->cutoff = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->cutoff = boost::lexical_cast<float>(value);
+			}
+			return;
+		}
+		else if ("cutoff2" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->cutoff2 = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->cutoff2 = boost::lexical_cast<float>(value);
+			}
+			return;
+		}
+		else if ("cutoff_chanaft" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->cutoff_chanaft = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->cutoff_chanaft = boost::lexical_cast<int>(value);
+			}
+			return;
+		}
+		else if ("cutoff2_chanaft" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->cutoff2_chanaft = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->cutoff2_chanaft = boost::lexical_cast<int>(value);
+			}
+			return;
+		}
+		else if ("cutoff_polyaft" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->cutoff_polyaft = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->cutoff_polyaft = boost::lexical_cast<int>(value);
+			}
+			return;
+		}
+		else if ("cutoff2_polyaft" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->cutoff2_polyaft = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->cutoff2_polyaft = boost::lexical_cast<int>(value);
+			}
+			return;
+		}
+		else if ("resonance" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->resonance = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->resonance = boost::lexical_cast<float>(value);
+			}
+			return;
+		}
+		else if ("resonance2" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->resonance2 = boost::lexical_cast<float>(value);
+			case GROUP:
+				_current_group->resonance2 = boost::lexical_cast<float>(value);
+			}
+			return;
+		}
+		else if ("fil_keytrack" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->fil_keytrack = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->fil_keytrack = boost::lexical_cast<int>(value);
+			}
+			return;
+		}
+		else if ("fil2_keytrack" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->fil2_keytrack = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->fil2_keytrack = boost::lexical_cast<int>(value);
+			}
+			return;
+		}
+		else if ("fil_keycenter" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->fil_keycenter = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
+			case GROUP:
+				_current_group->fil_keycenter = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
+			}
+			return;
+		}
+		else if ("fil2_keycenter" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->fil2_keycenter = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
+			case GROUP:
+				_current_group->fil2_keycenter = boost::lexical_cast<int>(value) + note_offset + 12 * octave_offset;
+			}
+			return;
+		}
+		else if ("fil_veltrack" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->fil_veltrack = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->fil_veltrack = boost::lexical_cast<int>(value);
+			}
+			return;
+		}
+		else if ("fil2_veltrack" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->fil2_veltrack = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->fil2_veltrack = boost::lexical_cast<int>(value);
+			}
+			return;
+		}
+		else if ("fil_random" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->fil_random = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->fil_random = boost::lexical_cast<int>(value);
+			}
+			return;
+		}
+		else if ("fil2_random" == key)
+		{
+			switch (_current_section)
+			{
+			case REGION:
+				_current_region->fil2_random = boost::lexical_cast<int>(value);
+			case GROUP:
+				_current_group->fil2_random = boost::lexical_cast<int>(value);
+			}
+			return;
+		}
+
 		//fixme: parse amp_velcurve_N
 
 		// CCs
@@ -1714,6 +2022,184 @@ namespace sfz
 					_current_region->xfout_hicc[num_cc] = boost::lexical_cast<int>(value);
 				case GROUP:
 					_current_group->xfout_hicc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+
+			// filter
+			else if ("cutoff_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->cutoff_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->cutoff_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("cutoff2_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->cutoff2_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->cutoff2_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("cutoff_smooth" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->cutoff_smoothcc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->cutoff_smoothcc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("cutoff2_smooth" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->cutoff2_smoothcc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->cutoff2_smoothcc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("cutoff_step" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->cutoff_stepcc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->cutoff_stepcc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("cutoff2_step" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->cutoff2_stepcc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->cutoff2_stepcc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("cutoff_curve" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->cutoff_curvecc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->cutoff_curvecc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("cutoff2_curve" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->cutoff2_curvecc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->cutoff2_curvecc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("resonance_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->resonance_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->resonance_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("resonance2_on" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->resonance2_oncc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->resonance2_oncc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("resonance_smooth" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->resonance_smoothcc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->resonance_smoothcc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("resonance2_smooth" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->resonance2_smoothcc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->resonance2_smoothcc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("resonance_step" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->resonance_stepcc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->resonance_stepcc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("resonance2_step" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->resonance2_stepcc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->resonance2_stepcc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("resonance_curve" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->resonance_curvecc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->resonance_curvecc[num_cc] = boost::lexical_cast<int>(value);
+				}
+				return;
+			}
+			else if ("resonance2_curve" == key_cc)
+			{
+				switch (_current_section)
+				{
+				case REGION:
+					_current_region->resonance2_curvecc[num_cc] = boost::lexical_cast<int>(value);
+				case GROUP:
+					_current_group->resonance2_curvecc[num_cc] = boost::lexical_cast<int>(value);
 				}
 				return;
 			}

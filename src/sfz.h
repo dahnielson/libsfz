@@ -49,6 +49,10 @@ namespace sfz
 	enum off_mode_t  { OFF_FAST, OFF_NORMAL };
 	enum loop_mode_t { NO_LOOP, ONE_SHOT, LOOP_CONTINOUS, LOOP_SUSTAIN };
 	enum curve_t     { GAIN, POWER };
+	enum filter_t    { LPF_1P, HPF_1P, BPF_1P, BRF_1P, APF_1P, 
+			   LPF_2P, HPF_2P, BPF_2P, BRF_2P, PKF_2P, 
+			   LPF_4P, HPF_4P, 
+			   LPF_6P, HPF_6P };
 
 	typedef unsigned char trigger_t;
 	typedef unsigned char uint8_t;
@@ -267,8 +271,27 @@ namespace sfz
 		int tune;
 		optional<int> pitch_keycenter; int pitch_keytrack; int pitch_veltrack; int pitch_random;
 		int bend_up; int bend_down; int bend_step;
-	};
 
+		// filter
+		filter_t fil_type; filter_t fil2_type;
+		optional<float> cutoff; optional<float> cutoff2;
+		boost::array<int, 128> cutoff_oncc; boost::array<int, 128> cutoff2_oncc;
+		boost::array<int, 128> cutoff_smoothcc; boost::array<int, 128> cutoff2_smoothcc;
+		boost::array<int, 128> cutoff_stepcc; boost::array<int, 128> cutoff2_stepcc;
+		boost::array<int, 128> cutoff_curvecc; boost::array<int, 128> cutoff2_curvecc;
+		int cutoff_chanaft; int cutoff2_chanaft;
+		int cutoff_polyaft; int cutoff2_polyaft;
+		float resonance; float resonance2;
+		boost::array<int, 128> resonance_oncc; boost::array<int, 128> resonance2_oncc;
+		boost::array<int, 128> resonance_smoothcc; boost::array<int, 128> resonance2_smoothcc;
+		boost::array<int, 128> resonance_stepcc; boost::array<int, 128> resonance2_stepcc;
+		boost::array<int, 128> resonance_curvecc; boost::array<int, 128> resonance2_curvecc;
+		int fil_keytrack; int fil2_keytrack;
+		int fil_keycenter; int fil2_keycenter;
+		int fil_veltrack; int fil2_veltrack;
+		int fil_random; int fil2_random;
+	};
+	
 	/////////////////////////////////////////////////////////////
 	// class Region
 
