@@ -2,3 +2,4 @@ TODO
 ----
 
 * Allow literal note names in addition to MIDI note numbers
+* The control header directives should really be implemented in a preprocessor
