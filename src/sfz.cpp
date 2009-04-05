@@ -288,6 +288,27 @@ namespace sfz
 		bend_down = 0;
 		bend_step = 0;
 
+		// filter
+		fil_type = LPF_1P;
+		cutoff.unset();
+		cutoff_chanaft = 0;
+		cutoff_polyaft = 0;
+		resonance = 0;
+		fil_keytrack = 0;
+		fil_keycenter = 0;
+		fil_veltrack = 0;
+		fil_random = 0;
+
+		fil2_type = LPF_1P;
+		cutoff2.unset();
+		cutoff2_chanaft = 0;
+		cutoff2_polyaft = 0;
+		resonance2 = 0;
+		fil2_keytrack = 0;
+		fil2_keycenter = 0;
+		fil2_veltrack = 0;
+		fil2_random = 0;
+
 		// CCs defaults
 		for (int i = 0; i < 128; ++i)
 		{
@@ -313,6 +334,25 @@ namespace sfz
 			xfin_hicc[i].unset();
 			xfout_locc[i].unset();
 			xfout_hicc[i].unset();
+
+			// filter
+			cutoff_oncc[i] = 0;
+			cutoff_smoothcc[i] = 0;
+			cutoff_stepcc[i] = 0;
+			cutoff_curvecc[i] = 0;
+			resonance_oncc[i] = 0;
+			resonance_smoothcc[i] = 0;
+			resonance_stepcc[i] = 0;
+			resonance_curvecc[i] = 0;
+
+			cutoff2_oncc[i] = 0;
+			cutoff2_smoothcc[i] = 0;
+			cutoff2_stepcc[i] = 0;
+			cutoff2_curvecc[i] = 0;
+			resonance2_oncc[i] = 0;
+			resonance2_smoothcc[i] = 0;
+			resonance2_stepcc[i] = 0;
+			resonance2_curvecc[i] = 0;
 		}
 	}
 
@@ -427,6 +467,43 @@ namespace sfz
 		region->bend_up = bend_up;
 		region->bend_down = bend_down;
 		region->bend_step = bend_step;
+
+		// filter
+		region->fil_type = fil_type;
+		region->cutoff = cutoff;
+		region->cutoff_oncc = cutoff_oncc;
+		region->cutoff_smoothcc = cutoff_smoothcc;
+		region->cutoff_stepcc = cutoff_stepcc;
+		region->cutoff_curvecc = cutoff_curvecc;
+		region->cutoff_chanaft = cutoff_chanaft;
+		region->cutoff_polyaft = cutoff_polyaft;
+		region->resonance = resonance;
+		region->resonance_oncc = resonance_oncc;
+		region->resonance_smoothcc = resonance_smoothcc;
+		region->resonance_stepcc = resonance_stepcc;
+		region->resonance_curvecc = resonance_curvecc;
+		region->fil_keytrack = fil_keytrack;
+		region->fil_keycenter = fil_keycenter;
+		region->fil_veltrack = fil_veltrack;
+		region->fil_random = fil_random;
+
+		region->fil2_type = fil_type;
+		region->cutoff2 = cutoff;
+		region->cutoff2_oncc = cutoff_oncc;
+		region->cutoff2_smoothcc = cutoff_smoothcc;
+		region->cutoff2_stepcc = cutoff_stepcc;
+		region->cutoff2_curvecc = cutoff_curvecc;
+		region->cutoff2_chanaft = cutoff_chanaft;
+		region->cutoff2_polyaft = cutoff_polyaft;
+		region->resonance2 = resonance;
+		region->resonance2_oncc = resonance_oncc;
+		region->resonance2_smoothcc = resonance_smoothcc;
+		region->resonance2_stepcc = resonance_stepcc;
+		region->resonance2_curvecc = resonance_curvecc;
+		region->fil2_keytrack = fil_keytrack;
+		region->fil2_keycenter = fil_keycenter;
+		region->fil2_veltrack = fil_veltrack;
+		region->fil2_random = fil_random;
 
 		return region;
 	}
