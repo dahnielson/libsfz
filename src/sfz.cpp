@@ -535,6 +535,7 @@ namespace sfz
 		else 
 		{
 			_current_section = UNKNOWN;
+			std::cerr << "The header '" << token << "' is unsupported by libsfz!" << std::endl;
 		}
 	}
 	
@@ -558,6 +559,7 @@ namespace sfz
 			case GROUP:
 				_current_group->sample = value;
 			}
+			return;
 		}
 
 		// input controls
@@ -570,6 +572,7 @@ namespace sfz
 			case GROUP:
 				_current_group->lochan = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("hichan" == key)
 		{
@@ -580,6 +583,7 @@ namespace sfz
 			case GROUP:
 				_current_group->hichan = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("lokey" == key)
 		{
@@ -590,6 +594,7 @@ namespace sfz
 			case GROUP:
 				_current_group->lokey = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("hikey" == key)
 		{
@@ -600,6 +605,7 @@ namespace sfz
 			case GROUP:
 				_current_group->hikey = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("key" == key)
 		{
@@ -612,6 +618,7 @@ namespace sfz
 				_current_group->lokey = boost::lexical_cast<int>(value);
 				_current_group->hikey = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("lovel" == key)
 		{
@@ -622,6 +629,7 @@ namespace sfz
 			case GROUP:
 				_current_group->lovel = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("hivel" == key)
 		{
@@ -632,6 +640,7 @@ namespace sfz
 			case GROUP:
 				_current_group->hivel = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("lobend" == key)
 		{
@@ -642,6 +651,7 @@ namespace sfz
 			case GROUP:
 				_current_group->lobend = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("hibend" == key)
 		{
@@ -652,6 +662,7 @@ namespace sfz
 			case GROUP:
 				_current_group->hibend = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("lobpm" == key)
 		{
@@ -662,6 +673,7 @@ namespace sfz
 			case GROUP:
 				_current_group->lobpm = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("hibpm" == key)
 		{
@@ -672,6 +684,7 @@ namespace sfz
 			case GROUP:
 				_current_group->hibpm = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("lochanaft" == key)
 		{
@@ -682,6 +695,7 @@ namespace sfz
 			case GROUP:
 				_current_group->lochanaft = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("hichanaft" == key)
 		{
@@ -692,6 +706,7 @@ namespace sfz
 			case GROUP:
 				_current_group->hichanaft = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("lopolyaft" == key)
 		{
@@ -702,6 +717,7 @@ namespace sfz
 			case GROUP:
 				_current_group->lopolyaft = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("hipolyaft" == key)
 		{
@@ -712,6 +728,7 @@ namespace sfz
 			case GROUP:
 				_current_group->hipolyaft = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("loprog" == key)
 		{
@@ -722,6 +739,7 @@ namespace sfz
 			case GROUP:
 				_current_group->loprog = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("hiprog" == key)
 		{
@@ -732,6 +750,7 @@ namespace sfz
 			case GROUP:
 				_current_group->hiprog = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("lorand" == key)
 		{
@@ -742,6 +761,7 @@ namespace sfz
 			case GROUP:
 				_current_group->lorand = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("hirand" == key)
 		{
@@ -752,6 +772,7 @@ namespace sfz
 			case GROUP:
 				_current_group->hirand = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("lotimer" == key)
 		{
@@ -762,6 +783,7 @@ namespace sfz
 			case GROUP:
 				_current_group->lotimer = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("hitimer" == key)
 		{
@@ -772,6 +794,7 @@ namespace sfz
 			case GROUP:
 				_current_group->hitimer = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("seq_length" == key)
 		{
@@ -782,6 +805,7 @@ namespace sfz
 			case GROUP:
 				_current_group->seq_length = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("seq_position" == key)
 		{
@@ -792,6 +816,7 @@ namespace sfz
 			case GROUP:
 				_current_group->seq_position = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("sw_lokey" == key)
 		{
@@ -802,6 +827,7 @@ namespace sfz
 			case GROUP:
 				_current_group->sw_lokey = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("sw_hikey" == key)
 		{
@@ -812,6 +838,7 @@ namespace sfz
 			case GROUP:
 				_current_group->sw_hikey = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("sw_last" == key)
 		{
@@ -822,6 +849,7 @@ namespace sfz
 			case GROUP:
 				_current_group->sw_last = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("sw_down" == key)
 		{
@@ -832,6 +860,7 @@ namespace sfz
 			case GROUP:
 				_current_group->sw_down = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("sw_up" == key)
 		{
@@ -842,6 +871,7 @@ namespace sfz
 			case GROUP:
 				_current_group->sw_up = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("sw_previous" == key)
 		{
@@ -852,6 +882,7 @@ namespace sfz
 			case GROUP:
 				_current_group->sw_previous = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("sw_vel" == key)
 		{
@@ -868,6 +899,7 @@ namespace sfz
 				else if (value == "previous") 
 					_current_group->sw_vel = VEL_PREVIOUS;
 			}
+			return;
 		}
 		else if ("trigger" == key)
 		{
@@ -892,6 +924,7 @@ namespace sfz
 				else if (value == "legato") 
 					_current_group->trigger = TRIGGER_LEGATO;
 			}
+			return;
 		}
 		else if ("group" == key)
 		{
@@ -902,6 +935,7 @@ namespace sfz
 			case GROUP:
 				_current_group->group = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("off_by" == key)
 		{
@@ -912,6 +946,7 @@ namespace sfz
 			case GROUP:
 				_current_group->off_by = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("off_mode" == key)
 		{
@@ -928,6 +963,7 @@ namespace sfz
 				else if (value == "normal") 
 					_current_group->off_mode = OFF_NORMAL;
 			}
+			return;
 		}
 
 		// sample player
@@ -940,6 +976,7 @@ namespace sfz
 			case GROUP:
 				_current_group->count = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("delay" == key)
 		{
@@ -950,6 +987,7 @@ namespace sfz
 			case GROUP:
 				_current_group->delay = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("delay_random" == key)
 		{
@@ -960,6 +998,7 @@ namespace sfz
 			case GROUP:
 				_current_group->delay_random = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("delay_beats" == key)
 		{
@@ -970,6 +1009,7 @@ namespace sfz
 			case GROUP:
 				_current_group->delay_beats = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("stop_beats" == key)
 		{
@@ -980,6 +1020,7 @@ namespace sfz
 			case GROUP:
 				_current_group->stop_beats = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("delay_samples" == key)
 		{
@@ -990,6 +1031,7 @@ namespace sfz
 			case GROUP:
 				_current_group->delay_samples = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("end" == key)
 		{
@@ -1000,6 +1042,7 @@ namespace sfz
 			case GROUP:
 				_current_group->end = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("loop_crossfade" == key)
 		{
@@ -1010,6 +1053,7 @@ namespace sfz
 			case GROUP:
 				_current_group->loop_crossfade = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("offset_random" == key)
 		{
@@ -1020,6 +1064,7 @@ namespace sfz
 			case GROUP:
 				_current_group->offset_random = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("loop_mode" == key)
 		{
@@ -1044,6 +1089,7 @@ namespace sfz
 				else if (value == "loop_sustain")
 					_current_group->loop_mode = LOOP_SUSTAIN;
 			}
+			return;
 		}
 		else if ("loop_start" == key)
 		{
@@ -1054,6 +1100,7 @@ namespace sfz
 			case GROUP:
 				_current_group->loop_start = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("loop_end" == key)
 		{
@@ -1064,6 +1111,7 @@ namespace sfz
 			case GROUP:
 				_current_group->loop_end = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("sync_beats" == key)
 		{
@@ -1074,6 +1122,7 @@ namespace sfz
 			case GROUP:
 				_current_group->sync_beats = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("sync_offset" == key)
 		{
@@ -1084,6 +1133,7 @@ namespace sfz
 			case GROUP:
 				_current_group->sync_offset = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 
 		// amplifier
@@ -1096,6 +1146,7 @@ namespace sfz
 			case GROUP:
 				_current_group->volume = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("pan" == key)
 		{
@@ -1106,6 +1157,7 @@ namespace sfz
 			case GROUP:
 				_current_group->pan = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("width" == key)
 		{
@@ -1116,6 +1168,7 @@ namespace sfz
 			case GROUP:
 				_current_group->width = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("position" == key)
 		{
@@ -1126,6 +1179,7 @@ namespace sfz
 			case GROUP:
 				_current_group->position = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("amp_keytrack" == key)
 		{
@@ -1136,6 +1190,7 @@ namespace sfz
 			case GROUP:
 				_current_group->amp_keytrack = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("amp_keycenter" == key)
 		{
@@ -1146,6 +1201,7 @@ namespace sfz
 			case GROUP:
 				_current_group->amp_keycenter = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("amp_veltrack" == key)
 		{
@@ -1156,6 +1212,7 @@ namespace sfz
 			case GROUP:
 				_current_group->amp_veltrack = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("amp_random" == key)
 		{
@@ -1166,6 +1223,7 @@ namespace sfz
 			case GROUP:
 				_current_group->amp_random = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("rt_decay" == key)
 		{
@@ -1176,6 +1234,7 @@ namespace sfz
 			case GROUP:
 				_current_group->rt_decay = boost::lexical_cast<float>(value);
 			}
+			return;
 		}
 		else if ("xfin_lokey" == key)
 		{
@@ -1186,6 +1245,7 @@ namespace sfz
 			case GROUP:
 				_current_group->xfin_lokey = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("xfin_hikey" == key)
 		{
@@ -1196,6 +1256,7 @@ namespace sfz
 			case GROUP:
 				_current_group->xfin_hikey = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("xfout_lokey" == key)
 		{
@@ -1206,6 +1267,7 @@ namespace sfz
 			case GROUP:
 				_current_group->xfout_lokey = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("xfout_hikey" == key)
 		{
@@ -1216,6 +1278,7 @@ namespace sfz
 			case GROUP:
 				_current_group->xfout_hikey = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("xf_keycurve" == key)
 		{
@@ -1232,6 +1295,7 @@ namespace sfz
 				else if (value == "power")
 					_current_group->xf_keycurve = POWER;
 			}
+			return;
 		}
 		else if ("xfin_lovel" == key)
 		{
@@ -1242,6 +1306,7 @@ namespace sfz
 			case GROUP:
 				_current_group->xfin_lovel = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("xfin_hivel" == key)
 		{
@@ -1252,6 +1317,7 @@ namespace sfz
 			case GROUP:
 				_current_group->xfin_hivel = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("xfout_lovel" == key)
 		{
@@ -1262,6 +1328,7 @@ namespace sfz
 			case GROUP:
 				_current_group->xfout_lovel = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("xfout_hivel" == key)
 		{
@@ -1272,6 +1339,7 @@ namespace sfz
 			case GROUP:
 				_current_group->xfout_hivel = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("xf_velcurve" == key)
 		{
@@ -1288,6 +1356,7 @@ namespace sfz
 				else if (value == "power")
 					_current_group->xf_velcurve = POWER;
 			}
+			return;
 		}
 		else if ("xf_cccurve" == key)
 		{
@@ -1304,6 +1373,7 @@ namespace sfz
 				else if (value == "power")
 					_current_group->xf_cccurve = POWER;
 			}
+			return;
 		}
 		
 		// pitch
@@ -1316,6 +1386,7 @@ namespace sfz
 			case GROUP:
 				_current_group->transpose = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("tune" == key)
 		{
@@ -1326,6 +1397,7 @@ namespace sfz
 			case GROUP:
 				_current_group->tune = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("pitch_keycenter" == key)
 		{
@@ -1336,6 +1408,7 @@ namespace sfz
 			case GROUP:
 				_current_group->pitch_keycenter = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("pitch_keytrack" == key)
 		{
@@ -1346,6 +1419,7 @@ namespace sfz
 			case GROUP:
 				_current_group->pitch_keytrack = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("pitch_veltrack" == key)
 		{
@@ -1356,6 +1430,7 @@ namespace sfz
 			case GROUP:
 				_current_group->pitch_veltrack = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("pitch_random" == key)
 		{
@@ -1366,6 +1441,7 @@ namespace sfz
 			case GROUP:
 				_current_group->pitch_random = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("bend_up" == key)
 		{
@@ -1376,6 +1452,7 @@ namespace sfz
 			case GROUP:
 				_current_group->bend_up = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("bend_down" == key)
 		{
@@ -1386,6 +1463,7 @@ namespace sfz
 			case GROUP:
 				_current_group->bend_down = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 		else if ("bend_step" == key)
 		{
@@ -1396,6 +1474,7 @@ namespace sfz
 			case GROUP:
 				_current_group->bend_step = boost::lexical_cast<int>(value);
 			}
+			return;
 		}
 
 		//fixme: parse amp_velcurve_N
@@ -1417,6 +1496,7 @@ namespace sfz
 				case GROUP:
 					_current_group->locc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 			else if ("hi" == key_cc)
 			{
@@ -1427,6 +1507,7 @@ namespace sfz
 				case GROUP:
 					_current_group->hicc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 			else if ("start_lo" == key_cc)
 			{
@@ -1437,6 +1518,7 @@ namespace sfz
 				case GROUP:
 					_current_group->start_locc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 			else if ("start_hi" == key_cc)
 			{
@@ -1447,6 +1529,7 @@ namespace sfz
 				case GROUP:
 					_current_group->start_hicc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 			else if ("stop_lo" == key_cc)
 			{
@@ -1457,6 +1540,7 @@ namespace sfz
 				case GROUP:
 					_current_group->stop_locc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 			else if ("stop_hi" == key_cc)
 			{
@@ -1467,6 +1551,7 @@ namespace sfz
 				case GROUP:
 					_current_group->stop_hicc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 			else if ("on_lo" == key_cc)
 			{
@@ -1477,6 +1562,7 @@ namespace sfz
 				case GROUP:
 					_current_group->on_locc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 			else if ("on_hi" == key_cc)
 			{
@@ -1487,6 +1573,7 @@ namespace sfz
 				case GROUP:
 					_current_group->on_hicc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 
 			// sample player
@@ -1499,6 +1586,7 @@ namespace sfz
 				case GROUP:
 					_current_group->delay_oncc[num_cc] = boost::lexical_cast<float>(value);
 				}
+				return;
 			}
 			else if ("delay_samples_on" == key_cc)
 			{
@@ -1509,6 +1597,7 @@ namespace sfz
 				case GROUP:
 					_current_group->delay_samples_oncc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 			else if ("offset_on" == key_cc)
 			{
@@ -1519,6 +1608,7 @@ namespace sfz
 				case GROUP:
 					_current_group->offset_oncc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 
 			// amplifier
@@ -1531,6 +1621,7 @@ namespace sfz
 				case GROUP:
 					_current_group->gain_oncc[num_cc] = boost::lexical_cast<float>(value);
 				}
+				return;
 			}
 			else if ("xfin_lo" == key_cc)
 			{
@@ -1541,6 +1632,7 @@ namespace sfz
 				case GROUP:
 					_current_group->xfin_locc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 			else if ("xfin_hi" == key_cc)
 			{
@@ -1551,6 +1643,7 @@ namespace sfz
 				case GROUP:
 					_current_group->xfin_hicc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 			else if ("xfout_lo" == key_cc)
 			{
@@ -1561,6 +1654,7 @@ namespace sfz
 				case GROUP:
 					_current_group->xfout_locc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 			else if ("xfout_hi" == key_cc)
 			{
@@ -1571,8 +1665,11 @@ namespace sfz
 				case GROUP:
 					_current_group->xfout_hicc[num_cc] = boost::lexical_cast<int>(value);
 				}
+				return;
 			}
 		}
+
+		std::cerr << "The opcode '" << key << "' is unsupported by libsfz!" << std::endl;
 	}
 	
 
