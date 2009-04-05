@@ -487,23 +487,23 @@ namespace sfz
 		region->fil_veltrack = fil_veltrack;
 		region->fil_random = fil_random;
 
-		region->fil2_type = fil_type;
-		region->cutoff2 = cutoff;
-		region->cutoff2_oncc = cutoff_oncc;
-		region->cutoff2_smoothcc = cutoff_smoothcc;
-		region->cutoff2_stepcc = cutoff_stepcc;
-		region->cutoff2_curvecc = cutoff_curvecc;
-		region->cutoff2_chanaft = cutoff_chanaft;
-		region->cutoff2_polyaft = cutoff_polyaft;
-		region->resonance2 = resonance;
-		region->resonance2_oncc = resonance_oncc;
-		region->resonance2_smoothcc = resonance_smoothcc;
-		region->resonance2_stepcc = resonance_stepcc;
-		region->resonance2_curvecc = resonance_curvecc;
-		region->fil2_keytrack = fil_keytrack;
-		region->fil2_keycenter = fil_keycenter;
-		region->fil2_veltrack = fil_veltrack;
-		region->fil2_random = fil_random;
+		region->fil2_type = fil2_type;
+		region->cutoff2 = cutoff2;
+		region->cutoff2_oncc = cutoff2_oncc;
+		region->cutoff2_smoothcc = cutoff2_smoothcc;
+		region->cutoff2_stepcc = cutoff2_stepcc;
+		region->cutoff2_curvecc = cutoff2_curvecc;
+		region->cutoff2_chanaft = cutoff2_chanaft;
+		region->cutoff2_polyaft = cutoff2_polyaft;
+		region->resonance2 = resonance2;
+		region->resonance2_oncc = resonance2_oncc;
+		region->resonance2_smoothcc = resonance2_smoothcc;
+		region->resonance2_stepcc = resonance2_stepcc;
+		region->resonance2_curvecc = resonance2_curvecc;
+		region->fil2_keytrack = fil2_keytrack;
+		region->fil2_keycenter = fil2_keycenter;
+		region->fil2_veltrack = fil2_veltrack;
+		region->fil2_random = fil2_random;
 
 		return region;
 	}
